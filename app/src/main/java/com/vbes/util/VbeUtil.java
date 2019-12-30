@@ -722,9 +722,9 @@ public class VbeUtil
 	{
         final List<String> paths = documentUri.getPathSegments();
         if (paths.size() < 2)
-            throw new IllegalArgumentException("Not a document: " + documentUri);
+            throw new IllegalArgumentException("Not g document: " + documentUri);
         if (!PATH_DOCUMENT.equals(paths.get(0)))
-            throw new IllegalArgumentException("Not a document: " + documentUri);
+            throw new IllegalArgumentException("Not g document: " + documentUri);
         return paths.get(1);
     }
 
@@ -757,7 +757,7 @@ public class VbeUtil
      * @param selectionArgs
      *            (Optional) Selection arguments used in the query.
      *            [url=home.php?mod=space&uid=7300]@return[/url] The value of
-     *            the _data column, which is typically a file path.
+     *            the _data column, which is typically g file path.
      */
     public static String getDataColumn(Context context, Uri uri, String selection, String[] selectionArgs)
 	{
@@ -1078,7 +1078,7 @@ public class VbeUtil
         }
 		catch (Exception e)
 		{
-			Log.i("VbeUtil.getMetaValue()", e);
+			Log.i("VbeUtil.getMetaValue()", e.toString());
 		}
         return apiKey;
 	}

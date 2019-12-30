@@ -1,5 +1,6 @@
 package com.vbes.util.list;
 
+import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
@@ -22,29 +23,35 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         return mView.findViewById(id);
     }
 
-    View getView(@IdRes int id) {
+    public View getView(@IdRes int id) {
         View view = this.views.get(id);
         if (view == null) {
-            view = this.mView.findViewById(id);
+            view = this.bind(id);
             this.views.put(id, view);
         }
         return mView.findViewById(id);
     }
 
     public void setText(@IdRes int viewId, CharSequence value) {
-        TextView view = this.bind(viewId);
+        TextView view = (TextView) this.getView(viewId);
         if (view != null)
             view.setText(value);
     }
 
+    public void setBackgroundResource(@IdRes int viewId, @DrawableRes int value) {
+        View view = this.getView(viewId);
+        if (view != null)
+            view.setBackgroundResource(value);
+    }
+
     public void setVisible(@IdRes int viewId, boolean visible) {
-        View view = this.bind(viewId);
+        View view = this.getView(viewId);
         if (view != null)
             view.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
     }
 
     public void setGone(@IdRes int viewId, boolean visible) {
-        View view = this.bind(viewId);
+        View view = this.getView(viewId);
         if (view != null)
             view.setVisibility(visible ? View.VISIBLE : View.GONE);
     }

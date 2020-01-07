@@ -47,6 +47,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.renderscript.Allocation;
 import android.renderscript.Element;
@@ -1462,5 +1463,9 @@ public class VbeUtil
 		{
 			context.startActivity(intent);
 		}
+	}
+
+	public static void runDelayed(Runnable runnable, long delayed) {
+		new Handler().postDelayed(runnable, delayed);
 	}
 }

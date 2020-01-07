@@ -37,7 +37,7 @@ public class FileSizeUtil {
             e.printStackTrace();
             Log.e("FileSizeUtil", "获取失败!");
         }
-        return FormetFileSize(blockSize, sizeType);
+        return formatFileSize(blockSize, sizeType);
     }
 
     /**
@@ -59,7 +59,7 @@ public class FileSizeUtil {
             e.printStackTrace();
             Log.e("FileSizeUtil", "获取失败!");
         }
-        return FormetFileSize(blockSize);
+        return formatFileSize(blockSize);
     }
 
     /**
@@ -108,7 +108,7 @@ public class FileSizeUtil {
      * @param fileS
      * @return
      */
-    private static String FormetFileSize(long fileS) {
+    private static String formatFileSize(long fileS) {
         DecimalFormat df = new DecimalFormat("#.00");
         String fileSizeString = "";
         String wrongSize = "0B";
@@ -134,7 +134,7 @@ public class FileSizeUtil {
      * @param sizeType
      * @return
      */
-    private static double FormetFileSize(long fileS, int sizeType) {
+    private static double formatFileSize(long fileS, int sizeType) {
         DecimalFormat df = new DecimalFormat("#.00");
         double fileSizeLong = 0;
         switch (sizeType) {

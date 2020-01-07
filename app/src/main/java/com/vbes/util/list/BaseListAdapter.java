@@ -19,7 +19,7 @@ public abstract class BaseListAdapter<T> extends RecyclerView.Adapter<BaseViewHo
     private OnItemClickListener mListener;
     private OnItemLongClickListener longClickListener;
 
-    BaseListAdapter(@LayoutRes int resId) {
+    public BaseListAdapter(@LayoutRes int resId) {
         layoutRes = resId;
     }
 
@@ -36,7 +36,7 @@ public abstract class BaseListAdapter<T> extends RecyclerView.Adapter<BaseViewHo
         onRender(holder, mList.get(position), position);
     }
 
-    void addClick(final int position, View v) {
+    public void addClick(final int position, View v) {
         if (mListener != null) {
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -47,7 +47,7 @@ public abstract class BaseListAdapter<T> extends RecyclerView.Adapter<BaseViewHo
         }
     }
 
-    void addLongClick(final int position, View v) {
+    public void addLongClick(final int position, View v) {
         if (longClickListener != null) {
             v.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override

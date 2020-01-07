@@ -53,11 +53,14 @@ import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 import android.webkit.MimeTypeMap;
 import android.telephony.TelephonyManager;
@@ -76,7 +79,11 @@ public class VbeUtil
 		return id == -3;
 	}
 
-	//byte转为字符串
+	/**
+	 * byte转为字符串
+	 * @param src
+	 * @return
+	 */
     public static String bytesToHexString(byte[] src)
 	{
         StringBuilder stringBuilder = new StringBuilder("");
@@ -324,7 +331,7 @@ public class VbeUtil
     /**
      * 以最省内存的方式读取图片
      */
-    public static Bitmap readBitmap(final String path)
+    public static Bitmap readBitmap(String path)
 	{
         try
 		{
@@ -346,6 +353,32 @@ public class VbeUtil
             return null;
         }
     }
+
+	/**
+	 * 以最省内存的方式读取图片
+	 */
+	public static Bitmap readBitmap(File file)
+	{
+		try
+		{
+			FileInputStream stream = new FileInputStream(file);
+			BitmapFactory.Options opts = new BitmapFactory.Options();
+			opts.inSampleSize = 8;
+			opts.inPurgeable=true;
+			opts.inInputShareable=true;
+			Bitmap bitmap = BitmapFactory.decodeStream(stream , null, opts);
+			return bitmap;
+		}
+		catch (OutOfMemoryError e)
+		{
+			return null;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	public static void saveBitmapToPNG(Bitmap bm, File file)
 	{
@@ -371,6 +404,14 @@ public class VbeUtil
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static boolean isFileExistForUrl(String path, String saved) {
+		File folder = new File(saved);
+		if (!folder.exists())
+			folder.mkdirs();
+		File file = new File(folder, path);
+		return file.exists();
 	}
 	
 	public static void updateGallery(Context context, File f)
@@ -564,6 +605,16 @@ public class VbeUtil
 	public static void toastLongMessage(Context activity, String message)
 	{
 		Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
+	}
+
+	public static void toastShortMessage(Context context, int message)
+	{
+		Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+	}
+
+	public static void toastLongMessage(Context context, int message)
+	{
+		Toast.makeText(context, message, Toast.LENGTH_LONG).show();
 	}
 	
 	public static String trim(String src, char element)
@@ -946,7 +997,12 @@ public class VbeUtil
 		ClipboardManager cbm = (ClipboardManager) c.getSystemService(Context.CLIPBOARD_SERVICE);
 		cbm.setPrimaryClip(ClipData.newPlainText("VbeUtil", msg));
 	}
-	
+
+	/**
+	 * 读取文本文件并返回
+	 * @param is InputStream
+	 * @return 文件内容
+	 */
 	public static String ReadFileToString(InputStream is)
 	{
 		try
@@ -965,7 +1021,11 @@ public class VbeUtil
 			return null;
 		}
 	}
-	
+
+	/**
+	 * 获取设备序列号
+	 * @return
+	 */
 	public static String getSerialNo()
 	{
 		return Build.getSerial();
@@ -999,28 +1059,40 @@ public class VbeUtil
 		}
 		return deviceId.toString();
 	}
-	
-	//获取文件扩展名
+
+	/**
+	 * 获取文件扩展名
+	 * @param name 文件名
+	 * @return 文件扩展名
+	 */
 	public static String getExtension(String name)
 	{
 		String suffix = "";
 		int idx = name.lastIndexOf(".");
 		if(idx > 0)
 			suffix = name.substring(idx);
-		return suffix;
+		return suffix.toLowerCase();
 	}
-	
-	//获取文件扩展名(去掉.)
+
+	/**
+	 * 获取文件扩展名(去掉.)
+	 * @param name 文件名
+	 * @return 文件扩展名
+	 */
 	public static String getExtensionName(String name)
 	{
 		String suffix = "";
 		int idx = name.lastIndexOf(".");
 		if(idx > 0)
 			suffix = name.substring(idx + 1);
-		return suffix;
+		return suffix.toLowerCase();
 	}
-	
-	//得到扩展名MIME类型
+
+	/**
+	 * 得到扩展名MIME类型
+	 * @param fileName 文件名
+	 * @return 文件MIME类型
+	 */
 	public static String getMimeType(String fileName)
 	{
 		String mime = "*/*";
@@ -1029,8 +1101,14 @@ public class VbeUtil
 			mime = tmp;
 		return mime;
 	}
-	
-	//显示敏感信息
+
+	/**
+	 * 显示敏感信息
+	 * @param str 原始字符串
+	 * @param start 隐藏开始位置
+	 * @param end 隐藏结束位置
+	 * @return 带*的敏感字符串
+	 */
 	public static String getSecstr(String str, int start, int end)
 	{
 		char[] chars = str.toCharArray();
@@ -1128,16 +1206,6 @@ public class VbeUtil
 			BigDecimal result1 = new BigDecimal(Double.toString(meter / 1000));
 			return result1.setScale(2, BigDecimal.ROUND_HALF_UP).stripTrailingZeros().toPlainString() + "km";
 		}
-	}
-
-	public static void toastShortMessage(Context context, int message)
-	{
-		Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-	}
-
-	public static void toastLongMessage(Context context, int message)
-	{
-		Toast.makeText(context, message, Toast.LENGTH_LONG).show();
 	}
 
 	public static Dialog showProgressDialog(Context context, String title, String msg) {
@@ -1307,5 +1375,92 @@ public class VbeUtil
 			e.printStackTrace();
 		}
 		return bitmap;
+	}
+
+	public static boolean isSupportMD()
+	{
+		return Build.VERSION.SDK_INT > 20;
+	}
+
+	public static void startActivityOption(Activity context, Intent intent, View view, String shareName)
+	{
+		startActivityOptions(context, intent, view, shareName, false);
+	}
+
+	public static void startActivityOptions(Activity context, Intent intent, View view, String shareName)
+	{
+		startActivityOptions(context, intent, view, shareName, true);
+	}
+
+	public static void startActivityOptions(Activity context, Class<?> cls)
+	{
+		startActivityOptions(context, new Intent(context, cls));
+	}
+
+	public static void startActivityForResult(Activity context, Class<?> cls, int requestCode)
+	{
+		startActivityForResult(requestCode, context, new Intent(context, cls));
+	}
+
+	public static void startActivityOptions(Activity context, Intent intent, Pair...pairs)
+	{
+		try
+		{
+			if (isSupportMD())
+			{
+				ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(context, pairs);
+				context.startActivity(intent, options.toBundle());
+			}
+			else
+			{
+				context.startActivity(intent);
+				context.overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
+			}
+		}
+		catch (Exception e)
+		{
+			context.startActivity(intent);
+		}
+	}
+
+	public static void startActivityForResult(int requestCode, Activity context, Intent intent, Pair<View,String>...pairs)
+	{
+		try
+		{
+			if (isSupportMD())
+			{
+				ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(context, pairs);
+				context.startActivityForResult(intent, requestCode, options.toBundle());
+			}
+			else
+			{
+				context.startActivityForResult(intent, requestCode);
+				context.overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
+			}
+		}
+		catch (Exception e)
+		{
+			context.startActivityForResult(intent, requestCode);
+		}
+	}
+
+	private static void startActivityOptions(Activity context, Intent intent, View view, String shareName, boolean setName)
+	{
+		try
+		{
+			if (isSupportMD())
+			{
+				if (setName)
+					view.setTransitionName(shareName);
+				ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(context, view, shareName);
+				context.startActivity(intent, options.toBundle());
+			}
+			else
+				startActivityOptions(context, intent);
+		}
+		catch (Exception e)
+		{
+			context.startActivity(intent);
+		}
 	}
 }

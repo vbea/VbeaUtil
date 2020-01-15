@@ -1249,6 +1249,31 @@ public class VbeUtil
 				}).create().show();
 	}
 
+	public static void showConfirmCancelDialog(Context context, String title, String message, String ok, String cancel, final DialogResult posListener)
+	{
+		MyAlertDialog dialog = new MyAlertDialog(context);
+		dialog.setTitle(title);
+		dialog.setMessage(message);
+		dialog.setPositiveButton(ok, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialogInterface, int i) {
+				if (posListener != null) posListener.onConfirm();
+			}
+		});
+		dialog.setNegativeButton(cancel, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialogInterface, int i) {
+				if (posListener != null) posListener.onCancel();
+			}
+		}).setOnCancelListener(new DialogInterface.OnCancelListener() {
+			@Override
+			public void onCancel(DialogInterface dialogInterface) {
+				if (posListener != null) posListener.onCancel();
+			}
+		}).create();
+		dialog.show();
+	}
+
 	public static void showEditDialog(Context context, String title, DialogEditView view, String ok, DialogInterface.OnClickListener listener) {
 		new AlertDialog.Builder(context)
 				.setTitle(title)
@@ -1468,4 +1493,5 @@ public class VbeUtil
 	public static void runDelayed(Runnable runnable, long delayed) {
 		new Handler().postDelayed(runnable, delayed);
 	}
+
 }

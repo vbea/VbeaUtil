@@ -3,47 +3,59 @@ package com.vbes.util;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.Nullable;
+import android.util.Log;
 
 /**
  * Created by Vbe on 2020/1/15.
  */
 public class NotifyUtil {
-    private Context context;
+    private Builder mBuilder;
     private NotificationManager notificationManager;
-    private NotificationChannel notificationChannel;
-    private NotifyUtil(Context c, String channelId, String channelName, boolean vibrate, int importance) {
-        context = c;
-        notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+    private NotifyUtil(Builder builder) {
+        mBuilder = builder;
+        notificationManager = (NotificationManager) builder.context.getSystemService(Context.NOTIFICATION_SERVICE);
         if (VbeUtil.isAndroidO()) {
-            notificationChannel = new NotificationChannel(channelId, channelName, importance);
-            notificationChannel.enableVibration(vibrate);
-            notificationManager.createNotificationChannel(notificationChannel);
+            if (builder.notificationChannel == null) {
+                NotificationChannel notificationChannel = new NotificationChannel(builder.channelId, builder.channelName, builder.importance);
+                notificationChannel.enableVibration(builder.vibrate);
+                notificationManager.createNotificationChannel(notificationChannel);
+            } else {
+                notificationManager.createNotificationChannel(builder.notificationChannel);
+            }
         }
     }
 
-    /*public void createNotification(String title, String content) {
-        createNotification(0, title, content, false);
+    public void createNotification(String title, String content, @Nullable PendingIntent pending) {
+        createNotification(0, title, content, false, pending);
     }
 
-    public void createNotificationOngoing(String title, String content) {
-        createNotification(0, title, content, true);
+    public void createNotificationOngoing(String title, String content, @Nullable PendingIntent pending) {
+        createNotification(0, title, content, true, pending);
     }
 
-    public void createNotification(int id, String title, String content, boolean onGoing) {
-        Notification.Builder builder = new Notification.Builder(context);
+    public void createNotification(int id, String title, String content, boolean onGoing, @Nullable PendingIntent pending) {
+        Notification.Builder builder = new Notification.Builder(mBuilder.context);
         if (VbeUtil.isAndroidO()) {
-            builder.setChannelId(notificationChannel.getId());
+            builder.setChannelId(mBuilder.channelId);
         }
-        builder.setSmallIcon(R.mipmap.ic_launcher);
-        builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher));
+        builder.setSmallIcon(mBuilder.smallIcon);
+        //BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher)
+        if (mBuilder.largeIcon != null)
+            builder.setLargeIcon(mBuilder.largeIcon);
         builder.setContentTitle(title);
         builder.setContentText(content);
         builder.setOngoing(onGoing);
-        //builder.setContentIntent(PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), PendingIntent.FLAG_CANCEL_CURRENT));
+        if (pending != null)
+            builder.setContentIntent(pending);
         createNotification(id, builder.build());
-    }*/
+    }
 
     public void createNotification(int id, Notification notification) {
         notificationManager.notify(id, notification);
@@ -57,12 +69,15 @@ public class NotifyUtil {
         notificationManager.cancelAll();
     }
 
-    public class Builder {
-        private Context context;
-        private String channelId = "0";
-        private String channelName = "Default";
-        private int importance = NotificationManager.IMPORTANCE_DEFAULT;
-        private boolean vibrate = false;
+    public static class Builder {
+        Context context;
+        String channelId = "0";
+        String channelName = "Default";
+        int importance = NotificationManager.IMPORTANCE_DEFAULT;
+        boolean vibrate = false;
+        int smallIcon = 0;
+        Bitmap largeIcon;
+        NotificationChannel notificationChannel;
         public Builder(Context c) {
             context = c;
         }
@@ -87,8 +102,18 @@ public class NotifyUtil {
             return this;
         }
 
+        public Builder setSmallIcon(@DrawableRes int id) {
+            this.smallIcon = id;
+            return this;
+        }
+
+        public Builder setChannel(NotificationChannel channel) {
+            this.notificationChannel = channel;
+            return this;
+        }
+
         public NotifyUtil build() {
-            return new NotifyUtil(context, channelId, channelName, vibrate, importance);
+            return new NotifyUtil(this);
         }
     }
 }

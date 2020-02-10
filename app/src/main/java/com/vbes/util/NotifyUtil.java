@@ -72,7 +72,7 @@ public class NotifyUtil {
     public static class Builder {
         Context context;
         String channelId = "0";
-        String channelName = "Default";
+        String channelName = "DefaultVbe";
         int importance = NotificationManager.IMPORTANCE_DEFAULT;
         boolean vibrate = false;
         int smallIcon = 0;
@@ -104,6 +104,11 @@ public class NotifyUtil {
 
         public Builder setSmallIcon(@DrawableRes int id) {
             this.smallIcon = id;
+            return this;
+        }
+
+        public Builder setLargeIcon(Bitmap bitmap) {
+            this.largeIcon = bitmap;
             return this;
         }
 

@@ -20,8 +20,6 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.math.BigDecimal;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 //import junit.framework.Assert;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -67,13 +65,13 @@ import android.webkit.MimeTypeMap;
 import android.telephony.TelephonyManager;
 
 import com.vbes.util.lis.DialogResult;
-import com.vbes.util.lis.DownloadListner;
+import com.vbes.util.lis.DownloadListener;
 import com.vbes.util.view.DialogEditView;
 
 public class VbeUtil
 {
 	public static String SD_PATH = Environment.getExternalStorageDirectory() + "";
-	private DownloadListner agent;
+	private DownloadListener agent;
 
 	public static boolean isServerDataId(int id)
 	{
@@ -668,7 +666,7 @@ public class VbeUtil
 		return bitmap;
 	}
 
-	public static void downloadFile(String uri, File file, DownloadListner agent) {
+	public static void downloadFile(String uri, File file, DownloadListener agent) {
 		// 下载网络上的文件
 		try
 		{

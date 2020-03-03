@@ -12,6 +12,8 @@ import android.widget.TextView;
  */
 public class BaseViewHolder extends RecyclerView.ViewHolder {
     private final SparseArray<View> views = new SparseArray<>();
+    private BaseListAdapter.OnItemClickListener mListener;
+    private BaseListAdapter.OnItemLongClickListener longClickListener;
     private View mView;
 
     public BaseViewHolder(View itemView) {
@@ -21,6 +23,10 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
 
     public <T extends View> T bind(@IdRes int id) {
         return mView.findViewById(id);
+    }
+
+    public void setViews(View view) {
+        mView = view;
     }
 
     public View getView(@IdRes int id) {
@@ -54,5 +60,44 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         View view = this.getView(viewId);
         if (view != null)
             view.setVisibility(visible ? View.VISIBLE : View.GONE);
+    }
+
+    public void setEnabled(@IdRes int viewId, boolean enable) {
+        View view = this.getView(viewId);
+        if (view != null)
+            view.setEnabled(enable);
+    }
+
+    public void addClick(@IdRes int viewId) {
+        View view = this.getView(viewId);
+        if (view != null && mListener != null) {
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mListener.onItemClick(getAdapterPosition(), view);
+                }
+            });
+        }
+    }
+
+    public void addLongClick(@IdRes int viewId) {
+        View view = this.getView(viewId);
+        if (view != null && longClickListener != null) {
+            view.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    longClickListener.onItemLongClick(getAdapterPosition(), view);
+                    return true;
+                }
+            });
+        }
+    }
+
+    public void setOnItemClickListener(BaseListAdapter.OnItemClickListener listener) {
+        this.mListener = listener;
+    }
+
+    public void setOnItemLongClickListener(BaseListAdapter.OnItemLongClickListener listener) {
+        this.longClickListener = listener;
     }
 }

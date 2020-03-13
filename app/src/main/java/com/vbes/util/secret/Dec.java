@@ -12,7 +12,7 @@ import javax.crypto.Cipher;
 public class Dec {
     /** 字符串默认键值 */
     private static String strDefaultKey = "vbea";
-    static char HEX_DIGITS[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9','a', 'b', 'c', 'd', 'e', 'f' };
+    public static char HEX_DIGITS[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9','a', 'b', 'c', 'd', 'e', 'f' };
 
     //加密
     private Cipher encryptCipher = null;
@@ -79,7 +79,7 @@ public class Dec {
      *
      * @throws Exception
      */
-    Dec() throws Exception {
+    public Dec() throws Exception {
         this(strDefaultKey);
     }
 
@@ -90,7 +90,7 @@ public class Dec {
      *            指定的密钥
      * @throws Exception
      */
-    Dec(String strKey) throws Exception
+    public Dec(String strKey) throws Exception
     {
         if (strKey.equals("") || strKey.length() == 0)
             strKey = strDefaultKey;
@@ -144,7 +144,7 @@ public class Dec {
      * @return 解密后的字符串
      * @throws Exception
      */
-    String decrypt(String strIn) throws Exception {
+    public String decrypt(String strIn) throws Exception {
         return new String(decrypt(hexStr2ByteArr(strIn)));
     }
 

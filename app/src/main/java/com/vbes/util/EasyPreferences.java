@@ -16,7 +16,7 @@ public class EasyPreferences
         spf = context.getSharedPreferences("setting", Context.MODE_PRIVATE);
     }
 
-    private static void init(Context context, String name) {
+    public static void init(Context context, String name) {
         spf = context.getSharedPreferences(name, Context.MODE_PRIVATE);
     }
 

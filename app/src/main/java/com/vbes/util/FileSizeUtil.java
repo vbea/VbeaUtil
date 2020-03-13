@@ -10,22 +10,23 @@ import java.text.DecimalFormat;
 
 public class FileSizeUtil {
     // 获取文件大小单位为B的double值
-    public static final int SIZETYPE_B = 1;
-    // 获取文件大小单位为KB的double值
-    public static final int SIZETYPE_KB = 2;
-    // 获取文件大小单位为MB的double值
-    public static final int SIZETYPE_MB = 3;
-    // 获取文件大小单位为GB的double值
-    public static final int SIZETYPE_GB = 4;
+    public static enum TYPE {
+        TYPE_B,
+        // 获取文件大小单位为KB的double值
+        TYPE_KB,
+        // 获取文件大小单位为MB的double值
+        TYPE_MB,
+        // 获取文件大小单位为GB的double值
+        TYPE_GB;
+    }
 
     /**
      * 获取文件指定文件的指定单位的大小
-     *
      * @param filePath 文件路径
      * @param sizeType 获取大小的类型1为B、2为KB、3为MB、4为GB
      * @return double值的大小
      */
-    public static double getFileOrFilesSize(String filePath, int sizeType) {
+    public static double getFileOrFilesSize(String filePath, TYPE sizeType) {
         File file = new File(filePath);
         long blockSize = 0;
         try {
@@ -162,22 +163,21 @@ public class FileSizeUtil {
      * @param sizeType
      * @return
      */
-    private static double formatFileSize(long fileS, int sizeType) {
+    public static double formatFileSize(long fileS, TYPE sizeType) {
         DecimalFormat df = new DecimalFormat("#.00");
         double fileSizeLong = 0;
         switch (sizeType) {
-            case SIZETYPE_B:
+            case TYPE_B:
                 fileSizeLong = Double.valueOf(df.format((double) fileS));
                 break;
-            case SIZETYPE_KB:
+            case TYPE_KB:
                 fileSizeLong = Double.valueOf(df.format((double) fileS / 1024));
                 break;
-            case SIZETYPE_MB:
+            case TYPE_MB:
                 fileSizeLong = Double.valueOf(df.format((double) fileS / 1048576));
                 break;
-            case SIZETYPE_GB:
-                fileSizeLong = Double.valueOf(df
-                        .format((double) fileS / 1073741824));
+            case TYPE_GB:
+                fileSizeLong = Double.valueOf(df.format((double) fileS / 1073741824));
                 break;
             default:
                 break;

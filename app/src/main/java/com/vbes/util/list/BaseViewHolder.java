@@ -21,6 +21,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         mView = itemView;
     }
 
+    @Deprecated
     public <T extends View> T bind(@IdRes int id) {
         return mView.findViewById(id);
     }
@@ -32,10 +33,10 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
     public View getView(@IdRes int id) {
         View view = this.views.get(id);
         if (view == null) {
-            view = this.bind(id);
+            view = this.mView.findViewById(id);
             this.views.put(id, view);
         }
-        return mView.findViewById(id);
+        return view;
     }
 
     public void setText(@IdRes int viewId, CharSequence value) {

@@ -26,6 +26,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         return mView.findViewById(id);
     }
 
+    @Deprecated
     public void setViews(View view) {
         mView = view;
     }

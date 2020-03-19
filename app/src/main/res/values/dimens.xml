@@ -4,7 +4,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="activity_half_margin">8dp</dimen>
-    <dimen name="activity_quat_margin">4dp</dimen>
+    <dimen name="activity_quart_margin">4dp</dimen>
     <dimen name="margin_12">12dp</dimen>
     <dimen name="margin_24">24dp</dimen>
     <dimen name="margin_48">48dp</dimen>
@@ -17,4 +17,5 @@
     <dimen name="button_size">56dp</dimen>
     <dimen name="edit_size">48dp</dimen>
     <dimen name="margin_64">64dp</dimen>
+    <dimen name="margin_72">72dp</dimen>
 </resources>

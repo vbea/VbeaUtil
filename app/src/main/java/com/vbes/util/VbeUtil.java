@@ -18,6 +18,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.math.BigDecimal;
 //import junit.framework.Assert;
@@ -260,8 +261,7 @@ public class VbeUtil
 		return null;
 	}
 	
-	public static byte[] readFromFile(String fileName, int offset, int len)
-	{
+	public static byte[] readFromFile(String fileName, int offset, int len) {
 		if (fileName == null)
 			return null;
 		File file = new File(fileName);
@@ -276,46 +276,37 @@ public class VbeUtil
 		if(offset + len > (int) file.length())
 			return null;
 		byte[] b = null;
-		try
-		{
+		try {
 			RandomAccessFile in = new RandomAccessFile(fileName, "r");
 			b = new byte[len];
 			in.seek(offset);
 			in.readFully(b);
 			in.close();
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			Log.i("VbeUtil.readFromFile", e.toString());
 		}
 		return b;
 	}
 
-    public static int computeSampleSize(BitmapFactory.Options options, int minSideLength, int maxNumOfPixels)
-	{
+    public static int computeSampleSize(BitmapFactory.Options options, int minSideLength, int maxNumOfPixels) {
         int initialSize = computeInitialSampleSize(options, minSideLength, maxNumOfPixels);
         int roundedSize;
-        if (initialSize <= 8)
-		{
+        if (initialSize <= 8) {
             roundedSize = 1;
-            while (roundedSize < initialSize)
-			{
+            while (roundedSize < initialSize) {
                 roundedSize <<= 1;
             }
-        }
-		else
+        } else
             roundedSize = (initialSize + 7) / 8 * 8;
         return roundedSize;
     }
 
-    private static int computeInitialSampleSize(BitmapFactory.Options options, int minSideLength, int maxNumOfPixels)
-	{
+    private static int computeInitialSampleSize(BitmapFactory.Options options, int minSideLength, int maxNumOfPixels) {
         double w = options.outWidth;
         double h = options.outHeight;
         int lowerBound = (maxNumOfPixels == -1) ? 1 : (int) Math.ceil(Math.sqrt(w * h / maxNumOfPixels));
         int upperBound = (minSideLength == -1) ? 128 : (int) Math.min(Math.floor(w / minSideLength), Math.floor(h / minSideLength));
-        if (upperBound < lowerBound)
-		{
+        if (upperBound < lowerBound) {
             // return the larger one when there is no overlapping zone.
             return lowerBound;
         }
@@ -330,10 +321,8 @@ public class VbeUtil
     /**
      * 以最省内存的方式读取图片
      */
-    public static Bitmap readBitmap(String path)
-	{
-        try
-		{
+    public static Bitmap readBitmap(String path) {
+        try {
             FileInputStream stream = new FileInputStream(new File(path));
             BitmapFactory.Options opts = new BitmapFactory.Options();
             opts.inSampleSize = 8;
@@ -341,13 +330,9 @@ public class VbeUtil
             opts.inInputShareable=true;
             Bitmap bitmap = BitmapFactory.decodeStream(stream , null, opts);
             return bitmap;
-        }
-		catch (OutOfMemoryError e)
-		{
+        } catch (OutOfMemoryError e) {
             return null;
-        }
-		catch (Exception e)
-		{
+        } catch (Exception e) {
 			e.printStackTrace();
             return null;
         }
@@ -356,10 +341,8 @@ public class VbeUtil
 	/**
 	 * 以最省内存的方式读取图片
 	 */
-	public static Bitmap readBitmap(File file)
-	{
-		try
-		{
+	public static Bitmap readBitmap(File file) {
+		try {
 			FileInputStream stream = new FileInputStream(file);
 			BitmapFactory.Options opts = new BitmapFactory.Options();
 			opts.inSampleSize = 8;
@@ -367,22 +350,16 @@ public class VbeUtil
 			opts.inInputShareable=true;
 			Bitmap bitmap = BitmapFactory.decodeStream(stream , null, opts);
 			return bitmap;
-		}
-		catch (OutOfMemoryError e)
-		{
+		} catch (OutOfMemoryError e) {
 			return null;
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 	
-	public static void saveBitmapToPNG(Bitmap bm, File file)
-	{
-		try
-		{
+	public static void saveBitmapToPNG(Bitmap bm, File file) {
+		try {
         	BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
         	bm.compress(CompressFormat.PNG, 80, bos);
         	bos.flush();
@@ -392,10 +369,8 @@ public class VbeUtil
 		}
     }
 
-	public static void saveBitmapToJPG(Bitmap bm, File file)
-	{
-		try
-		{
+	public static void saveBitmapToJPG(Bitmap bm, File file) {
+		try {
 			BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
 			bm.compress(CompressFormat.JPEG, 80, bos);
 			bos.flush();
@@ -413,46 +388,35 @@ public class VbeUtil
 		return file.exists();
 	}
 	
-	public static void updateGallery(Context context, File f)
-	{
-		try
-		{
+	public static void updateGallery(Context context, File f) {
+		try {
 			//MediaStore.Images.Media.insertImage(context.getContentResolver(), f.getAbsolutePath(), f.getName(), null);
 			ContentValues values = new ContentValues();
 			values.put(MediaStore.Images.Media.DATA, f.getAbsolutePath());
 			values.put(MediaStore.Images.Media.MIME_TYPE, "image/png");
 			context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
 			context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(f.getParentFile())));
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public static String getDeviceModel()
-	{
-		try
-		{
+	public static String getDeviceModel() {
+		try {
 			return Build.MODEL;
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			return "";
 		}
 	}
 
     private static final int MAX_DECODE_PICTURE_SIZE = 1920 * 1440;
-	public static Bitmap extractThumbNail(final String path, final int height, final int width, final boolean crop)
-	{
+	public static Bitmap extractThumbNail(final String path, final int height, final int width, final boolean crop) {
 		//Assert.assertTrue(path != null && !path.equals("") && height > 0 && width > 0);
 		BitmapFactory.Options options = new BitmapFactory.Options();
-		try
-		{
+		try {
 			options.inJustDecodeBounds = true;
 			Bitmap tmp = BitmapFactory.decodeFile(path, options);
-			if (tmp != null)
-			{
+			if (tmp != null) {
 				tmp.recycle();
 				tmp = null;
 			}
@@ -462,21 +426,17 @@ public class VbeUtil
 			if (options.inSampleSize <= 1)
 				options.inSampleSize = 1;
 			// NOTE: out of memory error
-			while (options.outHeight * options.outWidth / options.inSampleSize > MAX_DECODE_PICTURE_SIZE)
-			{
+			while (options.outHeight * options.outWidth / options.inSampleSize > MAX_DECODE_PICTURE_SIZE) {
 				options.inSampleSize++;
 			}
 			int newHeight = height;
 			int newWidth = width;
-			if (crop)
-			{
+			if (crop) {
 				if (beY > beX)
 					newHeight = (int) (newWidth * 1.0 * options.outHeight / options.outWidth);
 				else
 					newWidth = (int) (newHeight * 1.0 * options.outWidth / options.outHeight);
-			}
-			else
-			{
+			} else {
 				if (beY < beX)
 					newHeight = (int) (newWidth * 1.0 * options.outHeight / options.outWidth);
 				else
@@ -487,13 +447,11 @@ public class VbeUtil
 			if (bm == null)
 				return null;
 			final Bitmap scale = Bitmap.createScaledBitmap(bm, newWidth, newHeight, true);
-			if (scale != null)
-			{
+			if (scale != null) {
 				bm.recycle();
 				bm = scale;
 			}
-			if (crop)
-			{
+			if (crop) {
 				final Bitmap cropped = Bitmap.createBitmap(bm, (bm.getWidth() - width) >> 1, (bm.getHeight() - height) >> 1, width, height);
 				if (cropped == null)
 					return bm;
@@ -501,27 +459,22 @@ public class VbeUtil
 				bm = cropped;
 			}
 			return bm;
-		}
-		catch (OutOfMemoryError e)
-		{
+		} catch (OutOfMemoryError e) {
 			Log.i("Vbe.extractThumbNail", e.toString());
 			options = null;
 		}
 		return null;
 	}
 	
-	public static final void showResultDialog(Context context, String msg, String title)
-	{
+	public static final void showResultDialog(Context context, String msg, String title) {
 		showResultDialog(context, msg, title, null);
 	}
 	
-	public static final void showResultDialog(Context context, String msg, String title, DialogInterface.OnClickListener lis)
-	{
+	public static final void showResultDialog(Context context, String msg, String title, DialogInterface.OnClickListener lis) {
 		showResultDialog(context, msg, title, "知道了", lis);
 	}
 	
-	public static final void showResultDialog(Context context, String msg, String title, String ok, DialogInterface.OnClickListener lis)
-	{
+	public static final void showResultDialog(Context context, String msg, String title, String ok, DialogInterface.OnClickListener lis) {
 		if(msg == null) return;
 		//String rmsg = msg.replace(",", "\n");
 		new MyAlertDialog(context).setTitle(title).setMessage(msg).setNegativeButton(ok, lis).create().show();
@@ -533,8 +486,7 @@ public class VbeUtil
 		}
 	}
 	
-	public static void showConfirmCancelDialog(Context context, String title, String message, DialogInterface.OnClickListener posListener)
-	{
+	public static void showConfirmCancelDialog(Context context, String title, String message, DialogInterface.OnClickListener posListener) {
 		MyAlertDialog dialog = new MyAlertDialog(context);
 		dialog.setTitle(title);
 		dialog.setMessage(message);
@@ -544,13 +496,11 @@ public class VbeUtil
 		dialog.show();
 	}
 	
-	public static void showConfirmCancelDialog(Context context, String message, DialogInterface.OnClickListener posListener)
-	{
+	public static void showConfirmCancelDialog(Context context, String message, DialogInterface.OnClickListener posListener) {
 		showConfirmCancelDialog(context, android.R.string.dialog_alert_title, message, posListener);
 	}
 	
-	public static void showConfirmCancelDialog(Context context, int title, String message, DialogInterface.OnClickListener posListener)
-	{
+	public static void showConfirmCancelDialog(Context context, int title, String message, DialogInterface.OnClickListener posListener) {
 		MyAlertDialog dialog = new MyAlertDialog(context);
 		dialog.setTitle(title);
 		dialog.setMessage(message);
@@ -560,8 +510,7 @@ public class VbeUtil
 		dialog.show();
 	}
 	
-	public static void showConfirmCancelDialog(Context context, String title, String message, String ok, String cacel, DialogInterface.OnClickListener posListener)
-	{
+	public static void showConfirmCancelDialog(Context context, String title, String message, String ok, String cacel, DialogInterface.OnClickListener posListener) {
 		MyAlertDialog dialog = new MyAlertDialog(context);
 		dialog.setTitle(title);
 		dialog.setMessage(message);
@@ -571,8 +520,7 @@ public class VbeUtil
 		dialog.show();
 	}
 	
-	public static String Join(String splitter, String[] strs)
-	{
+	public static String Join(String splitter, String[] strs) {
 		if (strs.length <= 0)
 			return "";
 		StringBuffer sb = new StringBuffer();
@@ -583,8 +531,7 @@ public class VbeUtil
         return sb.toString().substring(0, sb.toString().length()-1);
 	}
 	
-	public static String Join(String splitter, List<String> strs)
-	{
+	public static String Join(String splitter, List<String> strs) {
 		if (strs.size() <= 0)
 			return "";
 		StringBuffer sb = new StringBuffer();
@@ -596,32 +543,26 @@ public class VbeUtil
 	}
 	
 	//打印消息并且用Toast显示消息
-	public static void toastShortMessage(Context activity, String message)
-	{
+	public static void toastShortMessage(Context activity, String message) {
 		Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
 	}
 
-	public static void toastLongMessage(Context activity, String message)
-	{
+	public static void toastLongMessage(Context activity, String message) {
 		Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
 	}
 
-	public static void toastShortMessage(Context context, int message)
-	{
+	public static void toastShortMessage(Context context, int message) {
 		Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
 	}
 
-	public static void toastLongMessage(Context context, int message)
-	{
+	public static void toastLongMessage(Context context, int message) {
 		Toast.makeText(context, message, Toast.LENGTH_LONG).show();
 	}
 	
-	public static String trim(String src, char element)
-	{
+	public static String trim(String src, char element) {
 		boolean beginIndexFlag = true;
 		boolean endIndexFlag = true;
-		do
-		{
+		do {
 			int beginIndex = src.indexOf(element)==0?1:0;
 			int endIndex = src.lastIndexOf(element)+1==src.length()?src.lastIndexOf(element):src.length();
 			src = src.substring(beginIndex,endIndex);
@@ -639,12 +580,10 @@ public class VbeUtil
 	 * @return
 	 * @throws MalformedURLException
 	 */
-	public static Bitmap getNetBitmap(String imageUri)
-	{
+	public static Bitmap getNetBitmap(String imageUri) {
 		// 显示网络上的图片
 		Bitmap bitmap = null;
-		try
-		{
+		try {
 			URL myFileUrl = new URL(imageUri);
 			HttpURLConnection conn = (HttpURLConnection) myFileUrl.openConnection();
 			conn.setDoInput(true);
@@ -652,14 +591,10 @@ public class VbeUtil
 			InputStream is = conn.getInputStream();
 			bitmap = BitmapFactory.decodeStream(is);
 			is.close();
-        }
-		catch (OutOfMemoryError e)
-		{
+        } catch (OutOfMemoryError e) {
             e.printStackTrace();
             bitmap = null;
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			Log.i("Vbe.getNetBitmap", e.toString());
             bitmap = null;
 		}
@@ -668,8 +603,7 @@ public class VbeUtil
 
 	public static void downloadFile(String uri, File file, DownloadListener agent) {
 		// 下载网络上的文件
-		try
-		{
+		try {
 			URL myFileUrl = new URL(uri);
 			HttpURLConnection conn = (HttpURLConnection) myFileUrl.openConnection();
 			conn.setDoInput(true);
@@ -698,34 +632,22 @@ public class VbeUtil
     // =兼容android 5.0
     // ==========
     public static String ACTION_OPEN_DOCUMENT = "android.intent.action.OPEN_DOCUMENT";
-    public static int Build_VERSION_KITKAT = 19;
-    public static String getPath(final Context context, final Uri uri)
-	{
-        final boolean isKitKat = Build.VERSION.SDK_INT >= 19;
+    public static String getPath(final Context context, final Uri uri) {
         // DocumentProvider
-        if (isKitKat && isDocumentUri(context, uri))
-		{
+        if (isSupportMD() && isDocumentUri(context, uri)) {
             // ExternalStorageProvider
-            if (isExternalStorageDocument(uri))
-			{
+            if (isExternalStorageDocument(uri)) {
                 final String docId = getDocumentId(uri);
                 final String[] split = docId.split(":");
                 final String type = split[0];
-                if ("primary".equalsIgnoreCase(type))
-				{
+                if ("primary".equalsIgnoreCase(type)) {
                     return Environment.getExternalStorageDirectory() + "/" + split[1];
                 }
-            }
-            // DownloadsProvider
-            else if (isDownloadsDocument(uri))
-			{
+            } else if (isDownloadsDocument(uri)) { // DownloadsProvider
                 final String id = getDocumentId(uri);
                 final Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
                 return getDataColumn(context, contentUri, null, null);
-            }
-            // MediaProvider
-            else if (isMediaDocument(uri))
-			{
+            } else if (isMediaDocument(uri)) { // MediaProvider
                 final String docId = getDocumentId(uri);
                 final String[] split = docId.split(":");
                 final String type = split[0];
@@ -742,18 +664,14 @@ public class VbeUtil
                 final String[] selectionArgs = new String[] { split[1] };
                 return getDataColumn(context, contentUri, selection, selectionArgs);
             }
-        }
-        // MediaStore (and general)
-        else if ("content".equalsIgnoreCase(uri.getScheme()))
-		{
+        } else if ("content".equalsIgnoreCase(uri.getScheme())) { // MediaStore (and general)
             // Return the remote address
             if (isGooglePhotosUri(uri))
                 return uri.getLastPathSegment();
             return getDataColumn(context, uri, null, null);
-        }
-        // File
-        else if ("file".equalsIgnoreCase(uri.getScheme()))
-            return uri.getPath();
+        } else if ("file".equalsIgnoreCase(uri.getScheme())) { // File
+			return uri.getPath();
+		}
         return null;
     }
 
@@ -913,24 +831,32 @@ public class VbeUtil
 		}
 		return sb.toString().substring(1);
 	}
+
+	public static boolean notSupportMD() {
+		return Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP;
+	}
+
+	public static boolean isSupportMD() {
+		return Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT;
+	}
+
+	public static boolean isAndroidL() {
+		return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
+	}
 	
-	public static boolean isAndroidM()
-	{
+	public static boolean isAndroidM() {
 		return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M);
 	}
 	
-	public static boolean isAndroidN()
-	{
+	public static boolean isAndroidN() {
 		return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N);
 	}
 	
-	public static boolean isAndroidO()
-	{
+	public static boolean isAndroidO() {
 		return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O);
 	}
 	
-	public static boolean isAndroidP()
-	{
+	public static boolean isAndroidP() {
 		return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P);
 	}
 
@@ -938,33 +864,31 @@ public class VbeUtil
 		return (Build.VERSION.SDK_INT >= 29);
 	}
 	
-	public static boolean hasPermission(Context c, String p)
-	{
-		return c.checkSelfPermission(p) == PackageManager.PERMISSION_GRANTED;
+	public static boolean hasPermission(Context c, String p) {
+    	if (isAndroidM())
+			return c.checkSelfPermission(p) == PackageManager.PERMISSION_GRANTED;
+    	else return true;
 	}
 	
-	public static boolean hasAllPermissions(Context c, String...p)
-	{
-		for (String s:p)
-		{
-			if (!hasPermission(c, s))
-				return false;
+	public static boolean hasAllPermissions(Context c, String...p) {
+    	if (isAndroidM()) {
+			for (String s : p) {
+				if (!hasPermission(c, s))
+					return false;
+			}
 		}
 		return true;
 	}
 
-	public static boolean hasAllPermissionsGranted(int[] grantResults)
-	{
-		for (int grantResult : grantResults)
-		{
+	public static boolean hasAllPermissionsGranted(int[] grantResults) {
+		for (int grantResult : grantResults) {
 			if (grantResult == PackageManager.PERMISSION_DENIED)
 				return false;
 		}
 		return true;
 	}
 
-	public static boolean checkSelfPermission(Context c, String...p)
-	{
+	public static boolean checkSelfPermission(Context c, String...p) {
 		if (isAndroidM()) {
 			for (String i : p) {
 				if (c.checkSelfPermission(i) != PackageManager.PERMISSION_GRANTED)
@@ -975,13 +899,18 @@ public class VbeUtil
 	}
 
 	@TargetApi(23)
-	public static void requestPermission(Activity a, int code, String...permissions)
-	{
-		a.requestPermissions(permissions, code);
+	public static void requestPermission(Activity a, int code, String...permissions) {
+    	List<String> list = new ArrayList<>();
+    	for (String permission : permissions) {
+    		if (!hasPermission(a, permission))
+    			list.add(permission);
+		}
+		if (list.size()>0) {
+			a.requestPermissions(list.toArray(new String[0]), code);
+		}
 	}
 	
-	public static void addClipboard(Context c, String label, String msg)
-	{
+	public static void addClipboard(Context c, String label, String msg) {
 		ClipboardManager cbm = (ClipboardManager) c.getSystemService(Context.CLIPBOARD_SERVICE);
 		cbm.setPrimaryClip(ClipData.newPlainText(label, msg));
 	}
@@ -991,8 +920,7 @@ public class VbeUtil
 	 * @param c 上下文
 	 * @param msg 文本内容
 	 */
-	public static void addClipboard(Context c, String msg)
-	{
+	public static void addClipboard(Context c, String msg) {
 		ClipboardManager cbm = (ClipboardManager) c.getSystemService(Context.CLIPBOARD_SERVICE);
 		cbm.setPrimaryClip(ClipData.newPlainText("VbeUtil", msg));
 	}
@@ -1002,21 +930,16 @@ public class VbeUtil
 	 * @param is InputStream
 	 * @return 文件内容
 	 */
-	public static String ReadFileToString(InputStream is)
-	{
-		try
-		{
+	public static String ReadFileToString(InputStream is) {
+		try {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			int i = -1;
-			while((i=is.read())!=-1)
-			{
+			while((i=is.read())!=-1) {
 				baos.write(i);
 			}
 			baos.close();
 			return baos.toString();
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			return null;
 		}
 	}
@@ -1035,25 +958,20 @@ public class VbeUtil
 	 * @param context
 	 * @return
 	 */
-	public static String getDeviceId(Context context)
-	{
+	public static String getDeviceId(Context context) {
 		StringBuilder deviceId = new StringBuilder();
-		try
-		{
+		try {
 			deviceId.append("model:");
 			deviceId.append(getDeviceModel());
 			//IMEI（imei）
 			TelephonyManager tm	= (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 			String imei	= tm.getDeviceId();
-			if(!isNullOrEmpty(imei))
-			{
+			if(!isNullOrEmpty(imei)) {
 				deviceId.append(",imei:");
 				deviceId.append(imei);
 				return deviceId.toString();
 			}
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			return deviceId.toString();
 		}
 		return deviceId.toString();
@@ -1064,8 +982,7 @@ public class VbeUtil
 	 * @param name 文件名
 	 * @return 文件扩展名
 	 */
-	public static String getExtension(String name)
-	{
+	public static String getExtension(String name) {
 		String suffix = "";
 		int idx = name.lastIndexOf(".");
 		if(idx > 0)
@@ -1078,8 +995,7 @@ public class VbeUtil
 	 * @param name 文件名
 	 * @return 文件扩展名
 	 */
-	public static String getExtensionName(String name)
-	{
+	public static String getExtensionName(String name) {
 		String suffix = "";
 		int idx = name.lastIndexOf(".");
 		if(idx > 0)
@@ -1092,8 +1008,7 @@ public class VbeUtil
 	 * @param fileName 文件名
 	 * @return 文件MIME类型
 	 */
-	public static String getMimeType(String fileName)
-	{
+	public static String getMimeType(String fileName) {
 		String mime = "*/*";
 		String tmp = MimeTypeMap.getSingleton().getMimeTypeFromExtension(getExtensionName(fileName));
 		if (tmp != null)
@@ -1108,8 +1023,7 @@ public class VbeUtil
 	 * @param end 隐藏结束位置
 	 * @return 带*的敏感字符串
 	 */
-	public static String getSecstr(String str, int start, int end)
-	{
+	public static String getSecstr(String str, int start, int end) {
 		char[] chars = str.toCharArray();
         int _char = (str.length() - start - end);
         StringBuilder sb = new StringBuilder();
@@ -1139,35 +1053,37 @@ public class VbeUtil
 	}
 	
 	//获取清单文件数据
-	public static String getMetaValue(Context context, String metaKey)
-	{
+	public static String getMetaValue(Context context, String metaKey) {
 		String apiKey = "";
 		if (context == null || isNullOrEmpty(metaKey))
 			return apiKey;
-        try
-		{
+        try {
 			ApplicationInfo ai = context.getPackageManager().getApplicationInfo(context.getPackageName(),PackageManager.GET_META_DATA);
-            if (ai != null)
-			{
+            if (ai != null) {
 				if (ai.metaData != null)
 					apiKey = ai.metaData.getString(metaKey);
             }
-        }
-		catch (Exception e)
-		{
+        } catch (Exception e) {
 			Log.i("VbeUtil.getMetaValue()", e.toString());
 		}
         return apiKey;
 	}
 	
-	public static int getStatusBarHeight(Activity p)
-	{
+	public static int getStatusBarHeight(Activity p) {
 		Rect rect = new Rect();
 		p.getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
 		return rect.top;
 	}
 
 	//////////////////////////////
+	public static boolean isValidFloat(@Nullable Float d) {
+		return d != null;
+	}
+
+	public static boolean isPlusFloat(@Nullable Float d) {
+		return d != null && d > 0;
+	}
+
 	public static boolean isValidDouble(@Nullable Double d) {
 		return d != null;
 	}
@@ -1193,15 +1109,11 @@ public class VbeUtil
 	 * @param meter 米数
 	 * @return
 	 */
-	public static String getFormatLengthValue(Double meter)
-	{
-		if (meter < 1000)
-		{
+	public static String getFormatLengthValue(Double meter) {
+		if (meter < 1000) {
 			BigDecimal result = BigDecimal.valueOf(meter);
 			return result.setScale(2, BigDecimal.ROUND_HALF_UP).stripTrailingZeros().toPlainString() + "m";
-		}
-		else
-		{
+		} else {
 			BigDecimal result1 = new BigDecimal(Double.toString(meter / 1000));
 			return result1.setScale(2, BigDecimal.ROUND_HALF_UP).stripTrailingZeros().toPlainString() + "km";
 		}
@@ -1211,8 +1123,7 @@ public class VbeUtil
 		return ProgressDialog.show(context, title, msg, true, false);
 	}
 
-	public static void showConfirmCancelDialog(Context context, int title, int message, DialogInterface.OnClickListener posListener)
-	{
+	public static void showConfirmCancelDialog(Context context, int title, int message, DialogInterface.OnClickListener posListener) {
 		new AlertDialog.Builder(context)
 				.setTitle(title)
 				.setMessage(message)
@@ -1222,8 +1133,7 @@ public class VbeUtil
 				.show();
 	}
 
-	public static void showConfirmCancelDialog(Context context, String title, String message, final DialogResult posListener)
-	{
+	public static void showConfirmCancelDialog(Context context, String title, String message, final DialogResult posListener) {
 		new AlertDialog.Builder(context)
 				.setTitle(title)
 				.setMessage(message)
@@ -1247,8 +1157,7 @@ public class VbeUtil
 				}).create().show();
 	}
 
-	public static void showConfirmCancelDialog(Context context, String title, String message, String ok, String cancel, final DialogResult posListener)
-	{
+	public static void showConfirmCancelDialog(Context context, String title, String message, String ok, String cancel, final DialogResult posListener) {
 		MyAlertDialog dialog = new MyAlertDialog(context);
 		dialog.setTitle(title);
 		dialog.setMessage(message);
@@ -1282,8 +1191,7 @@ public class VbeUtil
 				.show();
 	}
 
-	public static void startActivity(@Nullable Context context, Class<?> cls)
-	{
+	public static void startActivity(@Nullable Context context, Class<?> cls) {
 		if (context != null)
 			context.startActivity(new Intent(context, cls));
 	}
@@ -1346,8 +1254,7 @@ public class VbeUtil
 		if (arr.length <= 0)
 			return "";
 		StringBuilder sb = new StringBuilder();
-		for(String s:arr)
-		{
+		for(String s:arr) {
 			sb.append(s).append(splitter);
 		}
 		return sb.toString().substring(0, sb.toString().length()-1);
@@ -1357,8 +1264,7 @@ public class VbeUtil
 		if (arr.size() <= 0)
 			return "";
 		StringBuilder sb = new StringBuilder();
-		for(String s:arr)
-		{
+		for(String s:arr) {
 			sb.append(s).append(splitter);
 		}
 		return sb.toString().substring(0, sb.toString().length()-1);
@@ -1401,89 +1307,71 @@ public class VbeUtil
 		return bitmap;
 	}
 
-	public static boolean isSupportMD()
-	{
-		return Build.VERSION.SDK_INT > 20;
+	public static int spanCount(Context context, int gridExpectedSize) {
+		int screenWidth = context.getResources().getDisplayMetrics().widthPixels;
+		float expected = (float) screenWidth / (float) gridExpectedSize;
+		int spanCount = Math.round(expected);
+		if (spanCount == 0) {
+			spanCount = 1;
+		}
+		return spanCount;
 	}
 
-	public static void startActivityOption(Activity context, Intent intent, View view, String shareName)
-	{
+	@Deprecated
+	public static void startActivityOption(Activity context, Intent intent, View view, String shareName) {
 		startActivityOptions(context, intent, view, shareName, false);
 	}
 
-	public static void startActivityOptions(Activity context, Intent intent, View view, String shareName)
-	{
+	public static void startActivityOptions(Activity context, Intent intent, View view, String shareName) {
 		startActivityOptions(context, intent, view, shareName, true);
 	}
 
-	public static void startActivityOptions(Activity context, Class<?> cls)
-	{
+	public static void startActivityOptions(Activity context, Class<?> cls) {
 		startActivityOptions(context, new Intent(context, cls));
 	}
 
-	public static void startActivityForResult(Activity context, Class<?> cls, int requestCode)
-	{
+	public static void startActivityForResult(Activity context, Class<?> cls, int requestCode) {
 		startActivityForResult(requestCode, context, new Intent(context, cls));
 	}
 
-	public static void startActivityOptions(Activity context, Intent intent, Pair...pairs)
-	{
-		try
-		{
-			if (isSupportMD())
-			{
+	public static void startActivityOptions(Activity context, Intent intent, Pair...pairs) {
+		try {
+			if (isSupportMD()) {
 				ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(context, pairs);
 				context.startActivity(intent, options.toBundle());
-			}
-			else
-			{
+			} else {
 				context.startActivity(intent);
 				context.overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
 			}
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			context.startActivity(intent);
 		}
 	}
 
-	public static void startActivityForResult(int requestCode, Activity context, Intent intent, Pair<View,String>...pairs)
-	{
-		try
-		{
-			if (isSupportMD())
-			{
+	public static void startActivityForResult(int requestCode, Activity context, Intent intent, Pair<View,String>...pairs) {
+		try {
+			if (isSupportMD()) {
 				ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(context, pairs);
 				context.startActivityForResult(intent, requestCode, options.toBundle());
-			}
-			else
-			{
+			} else {
 				context.startActivityForResult(intent, requestCode);
 				context.overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
 			}
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			context.startActivityForResult(intent, requestCode);
 		}
 	}
 
-	private static void startActivityOptions(Activity context, Intent intent, View view, String shareName, boolean setName)
-	{
-		try
-		{
-			if (isSupportMD())
-			{
+	private static void startActivityOptions(Activity context, Intent intent, View view, String shareName, boolean setName) {
+		try {
+			if (isSupportMD()) {
 				if (setName)
 					view.setTransitionName(shareName);
 				ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(context, view, shareName);
 				context.startActivity(intent, options.toBundle());
-			}
-			else
+			} else
 				startActivityOptions(context, intent);
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			context.startActivity(intent);
 		}
 	}
@@ -1491,5 +1379,4 @@ public class VbeUtil
 	public static void runDelayed(Runnable runnable, long delayed) {
 		new Handler().postDelayed(runnable, delayed);
 	}
-
 }

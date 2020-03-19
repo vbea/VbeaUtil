@@ -18,7 +18,7 @@
         android:id="@+id/vbe_dialog_tips"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_quat_margin"
+        android:layout_marginTop="@dimen/activity_quart_margin"
         android:textColor="@color/textSecondary"
         android:textSize="12sp"
         android:visibility="gone"/>

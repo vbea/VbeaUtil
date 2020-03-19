@@ -1,3 +1,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.vbes.util">
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <application>
+        <activity
+            android:name=".ui.GalleryActivity"
+            android:theme="@style/DefaultTheme"/>
+        <activity
+            android:name=".matisse.ui.AlbumPreviewActivity"
+            android:theme="@style/DefaultTheme"/>
+        <activity
+            android:name=".matisse.ui.SelectedPreviewActivity"
+            android:theme="@style/DefaultTheme"/>
+        <activity
+            android:name=".ui.CropImageActivity"
+            android:theme="@style/DefaultTheme"
+            android:label="@string/crop_image_activity_title"/>
+    </application>
 </manifest>

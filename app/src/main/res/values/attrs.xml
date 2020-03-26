@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="toolbar" format="reference"/>
+    <attr name="toolbarTheme" format="reference"/>
     <attr name="album_dropdown_title_color" format="reference|color" />
     <attr name="album_dropdown_count_color" format="reference|color"/>
     <attr name="album_element_color" format="reference|color"/>
     <attr name="album_thumbnail_placeholder" format="reference|color"/>
     <attr name="album_emptyView" format="reference"/>
     <attr name="album_emptyView_textColor" format="reference|color"/>
-    <attr name="listPopupWindowStyle" format="reference"/>
+    <attr name="albumPopupWindowStyle" format="reference"/>
     <attr name="page_bg" format="reference|color"/>
     <attr name="bottomToolbar_bg" format="reference|color"/>
     <attr name="preview_bottomToolbar_apply_textColor" format="reference|color"/>

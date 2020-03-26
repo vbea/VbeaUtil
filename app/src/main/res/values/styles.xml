@@ -4,7 +4,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="toolbar">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
         <item name="album_dropdown_title_color">@color/textPrimary</item>
         <item name="album_dropdown_count_color">@color/textSecondary</item>
         <item name="album_element_color">@color/white</item>
@@ -19,12 +19,8 @@
         <item name="bottomToolbar_apply_textColor">@color/bottom_toolbar_apply</item>
         <item name="preview_bottomToolbar_back_textColor">@color/white</item>
         <item name="preview_bottomToolbar_apply_textColor">@color/preview_bottom_toolbar_apply</item>
-        <item name="android:listPopupWindowStyle">@style/Popup.Dracula</item>
+        <item name="albumPopupWindowStyle">@style/Widget.AppCompat.Light.ListPopupWindow</item>
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
-        <item name="listPopupWindowStyle">@style/Popup.Dracula</item>
         <item name="capture_textColor">@color/textPrimary</item>
-    </style>
-    <style name="Popup.Dracula" parent="Widget.AppCompat.ListPopupWindow">
-        <item name="android:popupBackground">@color/album_popup_bg</item>
     </style>
 </resources>

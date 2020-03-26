@@ -14,7 +14,8 @@
         android:elevation="@dimen/activity_quart_margin"
         android:fitsSystemWindows="true"
         android:clipToPadding="true"
-        android:theme="?toolbar">
+        android:theme="?toolbarTheme"
+        app:popupTheme="?attr/popupTheme">
         <TextView
             android:id="@+id/selected_album"
             android:layout_width="wrap_content"

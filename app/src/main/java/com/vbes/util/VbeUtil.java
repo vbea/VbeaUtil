@@ -48,12 +48,15 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.util.Pair;
@@ -1372,6 +1375,29 @@ public class VbeUtil
 			} else
 				startActivityOptions(context, intent);
 		} catch (Exception e) {
+			context.startActivity(intent);
+		}
+	}
+
+	public static void installAPK(Context context, @NonNull File file, String provider) {
+		if (file.exists()) {
+			Intent intent;
+			if (VbeUtil.isAndroidM()) {
+				intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS, Uri.parse("package:" + context.getPackageName()));
+			} else {
+				intent = new Intent();
+			}
+			intent.setAction(Intent.ACTION_VIEW);
+			intent.addCategory(Intent.CATEGORY_DEFAULT);
+			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			String mime = getMimeType(file.getName());
+			if (VbeUtil.isAndroidN()) {
+				Uri contentUri = FileProvider.getUriForFile(context, provider, file);
+				intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+				intent.setDataAndType(contentUri, mime);
+			} else {
+				intent.setDataAndType(Uri.fromFile(file), mime);
+			}
 			context.startActivity(intent);
 		}
 	}

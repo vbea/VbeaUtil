@@ -74,7 +74,7 @@ public abstract class BaseListAdapter<T> extends RecyclerView.Adapter<BaseViewHo
         return super.getItemViewType(position);
     }
 
-    public int getEmptyViewCount() {
+    private int getEmptyViewCount() {
         if (mList == null && mEmptyLayout != null)
             return 1;
         if (mEmptyLayout == null || mEmptyLayout.getChildCount() == 0) {
@@ -160,6 +160,15 @@ public abstract class BaseListAdapter<T> extends RecyclerView.Adapter<BaseViewHo
     public void removeData(int position) {
         mList.remove(position);
         notifyItemRemoved(position);
+    }
+
+    public void removeAll() {
+        mList.clear();
+        notifyDataSetChanged();
+    }
+
+    public void clear() {
+        mList.clear();
     }
 
     public T getItemData(int position) {

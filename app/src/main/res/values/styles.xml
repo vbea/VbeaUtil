@@ -14,7 +14,7 @@
         <item name="item_placeholder">@color/item_placeholder</item>
         <item name="item_checkCircle_borderColor">@color/white</item>
         <item name="page_bg">@color/gallery_page_bg</item>
-        <item name="bottomToolbar_bg">@color/white</item>
+        <item name="bottomToolbar_bg">@color/background_white</item>
         <item name="bottomToolbar_preview_textColor">@color/bottom_toolbar_preview</item>
         <item name="bottomToolbar_apply_textColor">@color/bottom_toolbar_apply</item>
         <item name="preview_bottomToolbar_back_textColor">@color/white</item>

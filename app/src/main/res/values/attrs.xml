@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="toolbarTheme" format="reference"/>
+    <attr name="album_dropdown_background" format="reference|color" />
     <attr name="album_dropdown_title_color" format="reference|color" />
     <attr name="album_dropdown_count_color" format="reference|color"/>
     <attr name="album_element_color" format="reference|color"/>
@@ -64,5 +65,9 @@
         <attr name="cropMaxCropResultHeightPX" format="float"/>
         <attr name="cropFlipHorizontally" format="boolean"/>
         <attr name="cropFlipVertically" format="boolean"/>
+    </declare-styleable>
+    <declare-styleable name="StickyScrollView">
+        <attr name="stickyFooter" format="reference" />
+        <attr name="stickyHeader" format="reference" />
     </declare-styleable>
 </resources>

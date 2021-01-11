@@ -12,12 +12,15 @@ public class EasyPreferences
     private static SharedPreferences spf;
     private static SharedPreferences.Editor edt;
 
+    private EasyPreferences() {}
+
     public static void init(Context context) {
-        spf = context.getSharedPreferences("setting", Context.MODE_PRIVATE);
+        init(context, "setting");
     }
 
     public static void init(Context context, String name) {
-        spf = context.getSharedPreferences(name, Context.MODE_PRIVATE);
+        if (spf == null)
+            spf = context.getSharedPreferences(name, Context.MODE_PRIVATE);
     }
 
     public static String getString(String var1, String var2) {

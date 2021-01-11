@@ -34,4 +34,5 @@
     <string name="pick_image_intent_chooser_title">选择来源</string>
 
     <string name="crop_image_activity_no_permissions">取消中，未授予所需权限</string>
+    <string name="vbe_tips_know">知道了</string>
 </resources>

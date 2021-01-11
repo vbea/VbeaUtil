@@ -22,7 +22,24 @@
     <color name="alred">#EE0000</color><!--阿绫红-->
     <color name="skyblue">#87ceeb</color><!--天蓝色 -->
     <color name="lightBlue">#00FFFF</color><!--靓蓝-->
+    <color name="gray">#999999</color><!--灰色 -->
+    <color name="gray2">#DDDDDD</color><!--浅灰色-->
     <color name="grey">#808080</color><!--灰色 -->
+    <color name="grey2">#CCCCCC</color><!--浅灰色-->
+    <color name="grey3">#efefef</color><!--白灰色-->
+    <color name="forestgreen">#228b22</color><!--森林绿 -->
+    <color name="dodgerblue">#1e90ff</color><!--闪兰色 -->
+    <color name="darkturquoise">#00ced1</color><!--暗宝石绿 -->
+    <color name="blue">#0000ff</color><!--深天蓝色 -->
+    <color name="green">#4D8000</color><!--绿色 -->
+    <color name="black">#000000</color><!--黑色 -->
+    <color name="cyan">#00CCFF</color><!--青蓝色 -->
+    <color name="lty">#66CCFF</color><!--天依蓝-->
+    <color name="trans">#00FFFFFF</color><!--透明色-->
+    <color name="eyeshield">#C7EDCC</color>
+    <color name="nightbg">#424242</color><!--夜间模式背景-->
+    <color name="android_disable">#4FCCCCCC</color>
+    <color name="transparent">#00000000</color>
 
     <color name="background_white">#fffafafa</color>
     <color name="album_popup_bg">#34474E</color>

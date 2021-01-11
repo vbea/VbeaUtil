@@ -2,13 +2,13 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/margin_72">
+    android:layout_height="@dimen/margin_72"
+    android:background="?attr/album_dropdown_background">
     <com.vbes.util.matisse.ui.widget.RoundedRectangleImageView
         android:id="@+id/album_cover"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_centerVertical="true"
-        android:layout_marginStart="@dimen/activity_vertical_margin"
         android:layout_marginLeft="@dimen/activity_vertical_margin" />
     <TextView
         android:id="@+id/album_name"

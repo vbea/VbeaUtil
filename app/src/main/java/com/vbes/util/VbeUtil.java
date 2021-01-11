@@ -474,7 +474,7 @@ public class VbeUtil
 	}
 	
 	public static final void showResultDialog(Context context, String msg, String title, DialogInterface.OnClickListener lis) {
-		showResultDialog(context, msg, title, "知道了", lis);
+		showResultDialog(context, msg, title, context.getString(R.string.vbe_tips_know), lis);
 	}
 	
 	public static final void showResultDialog(Context context, String msg, String title, String ok, DialogInterface.OnClickListener lis) {
@@ -501,6 +501,16 @@ public class VbeUtil
 	
 	public static void showConfirmCancelDialog(Context context, String message, DialogInterface.OnClickListener posListener) {
 		showConfirmCancelDialog(context, android.R.string.dialog_alert_title, message, posListener);
+	}
+
+	public static void showConfirmCancelDialog(Context context, int title, int message, DialogInterface.OnClickListener posListener) {
+		MyAlertDialog dialog = new MyAlertDialog(context);
+		dialog.setTitle(title);
+		dialog.setMessage(message);
+		dialog.setPositiveButton(android.R.string.ok, posListener);
+		dialog.setNegativeButton(android.R.string.cancel, null).create();
+		//dialog.create().setCanceledOnTouchOutside(false);
+		dialog.show();
 	}
 	
 	public static void showConfirmCancelDialog(Context context, int title, String message, DialogInterface.OnClickListener posListener) {
@@ -1124,16 +1134,6 @@ public class VbeUtil
 
 	public static Dialog showProgressDialog(Context context, String title, String msg) {
 		return ProgressDialog.show(context, title, msg, true, false);
-	}
-
-	public static void showConfirmCancelDialog(Context context, int title, int message, DialogInterface.OnClickListener posListener) {
-		new AlertDialog.Builder(context)
-				.setTitle(title)
-				.setMessage(message)
-				.setPositiveButton(android.R.string.ok, posListener)
-				.setNegativeButton(android.R.string.cancel, null).create()
-				//dialog.create().setCanceledOnTouchOutside(false);
-				.show();
 	}
 
 	public static void showConfirmCancelDialog(Context context, String title, String message, final DialogResult posListener) {

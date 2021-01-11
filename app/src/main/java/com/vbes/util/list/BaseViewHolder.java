@@ -1,8 +1,12 @@
 package com.vbes.util.list;
 
+import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.StringRes;
@@ -64,6 +68,16 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         view.setTextColor(textColor);
     }
 
+    public void setTextColor(@IdRes int viewId, ColorStateList textColor) {
+        TextView view = getView(viewId);
+        view.setTextColor(textColor);
+    }
+
+    public void setTextColorResource(@IdRes int viewId, @ColorRes int colorId) {
+        TextView view = getView(viewId);
+        view.setTextColor(getRes2Color(view.getContext(), colorId));
+    }
+
     public void setImageBitmap(@IdRes int viewId, Bitmap bitmap) {
         ImageView view = getView(viewId);
         view.setImageBitmap(bitmap);
@@ -117,6 +131,15 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
 
     public void addClick(@IdRes int viewId) {
         View view = this.getView(viewId);
+        addClick(view);
+    }
+
+    public void addLongClick(@IdRes int viewId) {
+        View view = this.getView(viewId);
+        addLongClick(view);
+    }
+
+    public void addClick(View view) {
         if (view != null && mListener != null) {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -127,8 +150,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    public void addLongClick(@IdRes int viewId) {
-        View view = this.getView(viewId);
+    public void addLongClick(View view) {
         if (view != null && longClickListener != null) {
             view.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
@@ -146,5 +168,23 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
 
     public void setOnItemLongClickListener(BaseListAdapter.OnItemLongClickListener listener) {
         this.longClickListener = listener;
+    }
+
+    public String getString(@StringRes int id) {
+        return mView.getContext().getString(id);
+    }
+
+    @ColorInt
+    public int getRes2Color(@ColorRes int id) {
+        return getRes2Color(mView.getContext(), id);
+    }
+
+    @ColorInt
+    public int getRes2Color(Context context, @ColorRes int id) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return context.getResources().getColor(id, context.getTheme());
+        } else {
+            return context.getResources().getColor(id);
+        }
     }
 }

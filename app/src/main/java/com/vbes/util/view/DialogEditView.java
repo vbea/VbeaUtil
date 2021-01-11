@@ -1,6 +1,7 @@
 package com.vbes.util.view;
 
 import android.app.Activity;
+import android.text.InputFilter;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -28,6 +29,19 @@ public class DialogEditView {
     public void setTips(String text) {
         txtTips.setVisibility(View.VISIBLE);
         txtTips.setText(text);
+    }
+
+    /**
+     *
+     * @param type android.text.InputType;
+     */
+    public void setInputType(int type) {
+        editText.setInputType(type);
+    }
+
+    public void setMaxLength(int length) {
+        InputFilter[] filters = {new InputFilter.LengthFilter(length)};
+        editText.setFilters(filters);
     }
 
     public void setHint(String hint) {

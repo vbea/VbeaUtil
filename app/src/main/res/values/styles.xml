@@ -5,6 +5,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="album_dropdown_background">@drawable/bg_item</item>
         <item name="album_dropdown_title_color">@color/textPrimary</item>
         <item name="album_dropdown_count_color">@color/textSecondary</item>
         <item name="album_element_color">@color/white</item>

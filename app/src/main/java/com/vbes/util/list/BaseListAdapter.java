@@ -158,21 +158,33 @@ public abstract class BaseListAdapter<T> extends RecyclerView.Adapter<BaseViewHo
     }
 
     public void removeData(int position) {
-        mList.remove(position);
-        notifyItemRemoved(position);
+        if (mList != null) {
+            mList.remove(position);
+            notifyItemRemoved(position);
+        }
     }
 
     public void removeAll() {
-        mList.clear();
-        notifyDataSetChanged();
+        if (mList != null) {
+            int count = mList.size();
+            mList.clear();
+            notifyItemRangeRemoved(0, count);
+        }
     }
 
     public void clear() {
-        mList.clear();
+        if (mList != null) {
+            mList.clear();
+        }
+        notifyDataSetChanged();
     }
 
     public T getItemData(int position) {
-        return mList.get(position);
+        if (mList != null) {
+            return mList.get(position);
+        } else {
+            return null;
+        }
     }
 
     public void setOnItemClickListener(BaseListAdapter.OnItemClickListener listener) {

@@ -14,25 +14,25 @@ import com.vbes.util.R;
 
 public class DividerDecoration extends ItemDecoration {
 
-	private Drawable drawable;
-	private final Rect mBounds = new Rect();
+    private Drawable drawable;
+    private final Rect mBounds = new Rect();
 
-	public DividerDecoration(Context context) {
-		drawable = ContextCompat.getDrawable(context, R.drawable.ic_divider);
+    public DividerDecoration(Context context) {
+        drawable = ContextCompat.getDrawable(context, R.drawable.ic_divider);
 		/*TypedArray a = context.obtainStyledAttributes(new int[]{R.attr.divider});
 		drawable = a.getDrawable(0);
 		a.recycle();*/
-	}
-	
-	@Override
-	public void onDraw(@NonNull Canvas canvas, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-		canvas.save();
+    }
+
+    @Override
+    public void onDraw(@NonNull Canvas canvas, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+        canvas.save();
         final int left;
         final int right;
         if (parent.getClipToPadding()) {
             left = parent.getPaddingLeft();
             right = parent.getWidth() - parent.getPaddingRight();
-            canvas.clipRect(left, parent.getPaddingTop(), right,parent.getHeight() - parent.getPaddingBottom());
+            canvas.clipRect(left, parent.getPaddingTop(), right, parent.getHeight() - parent.getPaddingBottom());
         } else {
             left = 0;
             right = parent.getWidth();
@@ -48,10 +48,10 @@ public class DividerDecoration extends ItemDecoration {
             drawable.draw(canvas);
         }
         canvas.restore();
-	}
-	
-	@Override
+    }
+
+    @Override
     public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-		outRect.set(0, 0, 0, drawable.getIntrinsicHeight());
+        outRect.set(0, 0, 0, drawable.getIntrinsicHeight());
     }
 }

@@ -8,20 +8,36 @@ import java.io.FileInputStream;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
+/**
+ * 使用单位显示文件大小(KM、MB、GB等)
+ */
 public class FileSizeUtil {
-    // 获取文件大小单位为B的double值
+
+    /**
+     * 获取文件大小单位为以下类型的double值
+     */
     public static enum TYPE {
+        /**
+         * 获取文件大小单位为字节的double值
+         */
         TYPE_B,
-        // 获取文件大小单位为KB的double值
+        /**
+         * 获取文件大小单位为千字节的double值
+         */
         TYPE_KB,
-        // 获取文件大小单位为MB的double值
+        /**
+         * 获取文件大小单位为兆字节的double值
+         */
         TYPE_MB,
-        // 获取文件大小单位为GB的double值
+        /**
+         * 获取文件大小单位为吉字节的double值
+         */
         TYPE_GB;
     }
 
     /**
      * 获取文件指定文件的指定单位的大小
+     *
      * @param filePath 文件路径
      * @param sizeType 获取大小的类型1为B、2为KB、3为MB、4为GB
      * @return double值的大小
@@ -67,8 +83,8 @@ public class FileSizeUtil {
     /**
      * 获取指定文件大小
      *
-     * @param file
-     * @return
+     * @param file 指定文件
+     * @return 指定文件的大小(字节)
      * @throws Exception
      */
     private static long getFileSize(File file) throws Exception {
@@ -85,10 +101,10 @@ public class FileSizeUtil {
     }
 
     /**
-     * 获取指定文件夹
+     * 递归获取指定文件夹下的大小
      *
-     * @param f
-     * @return
+     * @param f 文件目录
+     * @return 总大小(字节)
      * @throws Exception
      */
     private static long getFileSizes(File f) throws Exception {
@@ -107,8 +123,8 @@ public class FileSizeUtil {
     /**
      * 转换文件大小
      *
-     * @param fileS
-     * @return
+     * @param fileS 文件字节数
+     * @return 格式化后的文件大小
      */
     private static String formatFileSize(long fileS) {
         DecimalFormat df = new DecimalFormat("#.00");
@@ -129,25 +145,27 @@ public class FileSizeUtil {
         return fileSizeString;
     }
 
-    public static String getFormatSize(long bytes)
-    {
+    /**
+     * 转换文件大小
+     *
+     * @param bytes 文件字节数
+     * @return 格式化后的文件大小
+     */
+    public static String getFormatSize(long bytes) {
         if (bytes < 1024)
             return bytes + "B";
         double kiloByte = bytes / 1024;
-        if (kiloByte < 1024)
-        {
+        if (kiloByte < 1024) {
             BigDecimal result1 = new BigDecimal(kiloByte);
             return result1.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "KB";
         }
         double megaByte = kiloByte / 1024;
-        if (megaByte < 1024)
-        {
+        if (megaByte < 1024) {
             BigDecimal result2 = new BigDecimal(megaByte);
             return result2.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "MB";
         }
         double gigaByte = megaByte / 1024;
-        if (gigaByte < 1024)
-        {
+        if (gigaByte < 1024) {
             BigDecimal result3 = new BigDecimal(gigaByte);
             return result3.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "GB";
         }
@@ -161,7 +179,7 @@ public class FileSizeUtil {
      *
      * @param fileS
      * @param sizeType
-     * @return
+     * @return 格式化后大小
      */
     public static double formatFileSize(long fileS, TYPE sizeType) {
         DecimalFormat df = new DecimalFormat("#.00");

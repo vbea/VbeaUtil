@@ -14,6 +14,9 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * 图片选择器
+ */
 public final class GalleryUtil {
 
     private final WeakReference<Activity> mContext;

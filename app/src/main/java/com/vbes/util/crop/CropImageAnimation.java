@@ -94,7 +94,8 @@ public class CropImageAnimation extends Animation implements Animation.Animation
     }
 
     @Override
-    public void onAnimationStart(Animation animation) {}
+    public void onAnimationStart(Animation animation) {
+    }
 
     @Override
     public void onAnimationEnd(Animation animation) {
@@ -102,5 +103,6 @@ public class CropImageAnimation extends Animation implements Animation.Animation
     }
 
     @Override
-    public void onAnimationRepeat(Animation animation) {}
+    public void onAnimationRepeat(Animation animation) {
+    }
 }

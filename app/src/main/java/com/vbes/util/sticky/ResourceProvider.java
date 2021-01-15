@@ -11,6 +11,7 @@ import com.vbes.util.sticky.lis.IResourceProvider;
  * Created by Vbe on 2020/12/17.
  */
 public class ResourceProvider implements IResourceProvider {
+
     private final TypedArray mTypeArray;
 
     public ResourceProvider(Context context, AttributeSet attrs, @StyleableRes int[] styleRes) {

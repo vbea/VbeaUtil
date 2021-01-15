@@ -8,63 +8,100 @@ import android.os.AsyncTask;
 import com.vbes.util.view.CropImageView;
 
 import java.lang.ref.WeakReference;
+
 /**
  * Created by Vbe on 2020/3/18.
  */
-public class BitmapCroppingWorkerTask extends AsyncTask<Void, Void, BitmapCroppingWorkerTask.Result>{
-    /** Use a WeakReference to ensure the ImageView can be garbage collected */
+public class BitmapCroppingWorkerTask extends AsyncTask<Void, Void, BitmapCroppingWorkerTask.Result> {
+    /**
+     * Use a WeakReference to ensure the ImageView can be garbage collected
+     */
     private final WeakReference<CropImageView> mCropImageViewReference;
 
-    /** the bitmap to crop */
+    /**
+     * the bitmap to crop
+     */
     private final Bitmap mBitmap;
 
-    /** The Android URI of the image to load */
+    /**
+     * The Android URI of the image to load
+     */
     private final Uri mUri;
     private final Context mContext;
 
-    /** Required cropping 4 points (x0,y0,x1,y1,x2,y2,x3,y3) */
+    /**
+     * Required cropping 4 points (x0,y0,x1,y1,x2,y2,x3,y3)
+     */
     private final float[] mCropPoints;
 
-    /** Degrees the image was rotated after loading */
+    /**
+     * Degrees the image was rotated after loading
+     */
     private final int mDegreesRotated;
 
-    /** the original width of the image to be cropped (for image loaded from URI) */
+    /**
+     * the original width of the image to be cropped (for image loaded from URI)
+     */
     private final int mOrgWidth;
 
-    /** the original height of the image to be cropped (for image loaded from URI) */
+    /**
+     * the original height of the image to be cropped (for image loaded from URI)
+     */
     private final int mOrgHeight;
 
-    /** is there is fixed aspect ratio for the crop rectangle */
+    /**
+     * is there is fixed aspect ratio for the crop rectangle
+     */
     private final boolean mFixAspectRatio;
 
-    /** the X aspect ration of the crop rectangle */
+    /**
+     * the X aspect ration of the crop rectangle
+     */
     private final int mAspectRatioX;
 
-    /** the Y aspect ration of the crop rectangle */
+    /**
+     * the Y aspect ration of the crop rectangle
+     */
     private final int mAspectRatioY;
 
-    /** required width of the cropping image */
+    /**
+     * required width of the cropping image
+     */
     private final int mReqWidth;
 
-    /** required height of the cropping image */
+    /**
+     * required height of the cropping image
+     */
     private final int mReqHeight;
 
-    /** is the image flipped horizontally */
+    /**
+     * is the image flipped horizontally
+     */
     private final boolean mFlipHorizontally;
 
-    /** is the image flipped vertically */
+    /**
+     * is the image flipped vertically
+     */
     private final boolean mFlipVertically;
 
-    /** The option to handle requested width/height */
+    /**
+     * The option to handle requested width/height
+     */
     private final CropImageView.RequestSizeOptions mReqSizeOptions;
 
-    /** the Android Uri to save the cropped image to */
+    /**
+     * the Android Uri to save the cropped image to
+     */
     private final Uri mSaveUri;
 
-    /** the compression format to use when writing the image */
+    /**
+     * the compression format to use when writing the image
+     */
     private final Bitmap.CompressFormat mSaveCompressFormat;
 
-    /** the quality (if applicable) to use when writing the image (0 - 100) */
+    /**
+     * the quality (if applicable) to use when writing the image (0 - 100)
+     */
     private final int mSaveCompressQuality;
     // endregion
 
@@ -146,7 +183,9 @@ public class BitmapCroppingWorkerTask extends AsyncTask<Void, Void, BitmapCroppi
         mBitmap = null;
     }
 
-    /** The Android URI that this task is currently loading. */
+    /**
+     * The Android URI that this task is currently loading.
+     */
     public Uri getUri() {
         return mUri;
     }
@@ -239,22 +278,34 @@ public class BitmapCroppingWorkerTask extends AsyncTask<Void, Void, BitmapCroppi
 
     // region: Inner class: Result
 
-    /** The result of BitmapCroppingWorkerTask async loading. */
+    /**
+     * The result of BitmapCroppingWorkerTask async loading.
+     */
     public static final class Result {
 
-        /** The cropped bitmap */
+        /**
+         * The cropped bitmap
+         */
         public final Bitmap bitmap;
 
-        /** The saved cropped bitmap uri */
+        /**
+         * The saved cropped bitmap uri
+         */
         public final Uri uri;
 
-        /** The error that occurred during async bitmap cropping. */
+        /**
+         * The error that occurred during async bitmap cropping.
+         */
         public final Exception error;
 
-        /** is the cropping request was to get a bitmap or to save it to uri */
+        /**
+         * is the cropping request was to get a bitmap or to save it to uri
+         */
         final boolean isSave;
 
-        /** sample size used creating the crop bitmap to lower its size */
+        /**
+         * sample size used creating the crop bitmap to lower its size
+         */
         public final int sampleSize;
 
         Result(Bitmap bitmap, int sampleSize) {

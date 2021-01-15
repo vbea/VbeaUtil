@@ -16,6 +16,7 @@ import java.util.List;
  * Created by Vbe on 2018/9/28.
  */
 public abstract class BaseListAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
+
     private static final int EMPTY_VIEW = 1000;
     private static final int NORMAL_VIEW = 1001;
     private int layoutRes;
@@ -23,8 +24,8 @@ public abstract class BaseListAdapter<T> extends RecyclerView.Adapter<BaseViewHo
     protected List<T> mList;
     private BaseListAdapter.OnItemClickListener mListener;
     private BaseListAdapter.OnItemLongClickListener longClickListener;
-    //protected BaseViewHolder holder;
     private FrameLayout mEmptyLayout;
+
     public BaseListAdapter(@LayoutRes int resId) {
         layoutRes = resId;
     }
@@ -113,7 +114,7 @@ public abstract class BaseListAdapter<T> extends RecyclerView.Adapter<BaseViewHo
         int count = 0;
         if (getEmptyViewCount() == 1) {
             count = 1;
-        } else if (mList != null){
+        } else if (mList != null) {
             count = mList.size();
         }
         return count;

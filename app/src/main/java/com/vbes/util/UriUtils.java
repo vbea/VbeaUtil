@@ -19,11 +19,18 @@ import android.support.v4.content.FileProvider;
 import java.io.File;
 
 /**
- * Created by Vbe on 2020/8/24.
+ * Uri与文件路径互转工具
+ * @author Created by Vbe on 2020/8/24.
  */
 public class UriUtils {
     private UriUtils(){}
 
+    /**
+     * 根据Uri获取文件真实路径
+     * @param context Activity content
+     * @param uri 文件Uri
+     * @return 文件路径
+     */
     public static String getFileRealPath(Context context, Uri uri) {
         String path = "";
         try {
@@ -71,11 +78,11 @@ public class UriUtils {
 
     private static String getFileForUri(Context context, Uri uri) throws Exception {
         String realPath = "";
-        String pathUri = uri.getEncodedPath(); //获取uri后缀
-        String authority = uri.getAuthority(); //获取uri提供者
+        String pathUri = uri.getEncodedPath();
+        String authority = uri.getAuthority();
         int splitIndex = pathUri.indexOf(47, 1);
-        String tags = Uri.decode(pathUri.substring(1, splitIndex)); //获取标签
-        pathUri = Uri.decode(pathUri.substring(splitIndex + 1)); //获取文件名
+        String tags = Uri.decode(pathUri.substring(1, splitIndex));
+        pathUri = Uri.decode(pathUri.substring(splitIndex + 1));
         ProviderInfo info = context.getPackageManager().resolveContentProvider(authority, PackageManager.GET_META_DATA);
         XmlResourceParser in = info.loadXmlMetaData(context.getPackageManager(), "android.support.FILE_PROVIDER_PATHS");
         if (in == null) {
@@ -126,8 +133,17 @@ public class UriUtils {
         //File root = (File)this.mRoots.get(tag);
     }
 
+    @Deprecated
     public static Uri getUri(final String filePath) {
         return Uri.fromFile(new File(filePath));
+    }
+
+    public static Uri getUri(Context context, String authority, String filePath) {
+        return getUri(context, authority, new File(filePath));
+    }
+
+    public static Uri getUri(Context context, String authority, File file) {
+        return FileProvider.getUriForFile(context, authority, file);
     }
 
     /**

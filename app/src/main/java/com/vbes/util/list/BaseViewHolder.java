@@ -65,32 +65,41 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
 
     public void setTextColor(@IdRes int viewId, @ColorInt int textColor) {
         TextView view = getView(viewId);
-        view.setTextColor(textColor);
+        if (view != null)
+            view.setTextColor(textColor);
     }
 
     public void setTextColor(@IdRes int viewId, ColorStateList textColor) {
         TextView view = getView(viewId);
-        view.setTextColor(textColor);
+        if (view != null)
+            view.setTextColor(textColor);
     }
 
     public void setTextColorResource(@IdRes int viewId, @ColorRes int colorId) {
         TextView view = getView(viewId);
-        view.setTextColor(getRes2Color(view.getContext(), colorId));
+        if (view != null)
+            view.setTextColor(getRes2Color(view.getContext(), colorId));
     }
 
     public void setImageBitmap(@IdRes int viewId, Bitmap bitmap) {
-        ImageView view = getView(viewId);
-        view.setImageBitmap(bitmap);
+        View view = getView(viewId);
+        if (view instanceof ImageView) {
+            ((ImageView) view).setImageBitmap(bitmap);
+        }
     }
 
     public void setImageDrawable(@IdRes int viewId, Drawable drawable) {
-        ImageView view = getView(viewId);
-        view.setImageDrawable(drawable);
+        View view = getView(viewId);
+        if (view instanceof ImageView) {
+            ((ImageView) view).setImageDrawable(drawable);
+        }
     }
 
     public void setImageResource(@IdRes int viewId, @DrawableRes int imageResId) {
-        ImageView view = getView(viewId);
-        view.setImageResource(imageResId);
+        View view = getView(viewId);
+        if (view instanceof ImageView) {
+            ((ImageView) view).setImageResource(imageResId);
+        }
     }
 
     public void setBackgroundResource(@IdRes int viewId, @DrawableRes int value) {
@@ -172,6 +181,20 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
                     return true;
                 }
             });
+        }
+    }
+
+    public void setOnClickListener(@IdRes int viewId, View.OnClickListener onClickListener) {
+        View view = this.getView(viewId);
+        if (view != null) {
+            view.setOnClickListener(onClickListener);
+        }
+    }
+
+    public void setOnLongClickListener(@IdRes int viewId, View.OnLongClickListener onClickListener) {
+        View view = this.getView(viewId);
+        if (view != null) {
+            view.setOnLongClickListener(onClickListener);
         }
     }
 

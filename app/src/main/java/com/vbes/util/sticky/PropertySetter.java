@@ -9,6 +9,7 @@ import com.vbes.util.VbeUtil;
  * Created by Vbe on 2020/12/17.
  */
 public class PropertySetter {
+
     public static void setTranslationZ(View view, float translationZ) {
         if (VbeUtil.isAndroidL()) {
             ViewCompat.setTranslationZ(view, translationZ);

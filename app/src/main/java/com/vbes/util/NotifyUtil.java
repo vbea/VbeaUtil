@@ -13,11 +13,13 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 /**
- * Created by Vbe on 2020/1/15.
+ * 发送通知工具
+ * @author Created by Vbe on 2020/1/15.
  */
 public class NotifyUtil {
     private Builder mBuilder;
     private NotificationManager notificationManager;
+
     private NotifyUtil(Builder builder) {
         mBuilder = builder;
         notificationManager = (NotificationManager) builder.context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -78,6 +80,7 @@ public class NotifyUtil {
         int smallIcon = 0;
         Bitmap largeIcon;
         NotificationChannel notificationChannel;
+
         public Builder(Context c) {
             context = c;
         }

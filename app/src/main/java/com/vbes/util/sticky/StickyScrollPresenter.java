@@ -9,6 +9,7 @@ import com.vbes.util.sticky.lis.IScreenInfoProvider;
  * Created by Vbe on 2020/12/17.
  */
 public class StickyScrollPresenter {
+
     private final IResourceProvider mTypedArrayResourceProvider;
     private StickyScrollPresentation mStickyScrollPresentation;
     private int mDeviceHeight;
@@ -28,13 +29,13 @@ public class StickyScrollPresenter {
         mStickyScrollPresentation = stickyScrollPresentation;
     }
 
-    public void onGlobalLayoutChange(@StyleableRes int headerRes, @StyleableRes int footerRes){
+    public void onGlobalLayoutChange(@StyleableRes int headerRes, @StyleableRes int footerRes) {
         int headerId = mTypedArrayResourceProvider.getResourceId(headerRes);
-        if(headerId != 0) {
+        if (headerId != 0) {
             mStickyScrollPresentation.initHeaderView(headerId);
         }
         int footerId = mTypedArrayResourceProvider.getResourceId(footerRes);
-        if(footerId != 0){
+        if (footerId != 0) {
             mStickyScrollPresentation.initFooterView(footerId);
         }
         mTypedArrayResourceProvider.recycle();
@@ -50,11 +51,11 @@ public class StickyScrollPresenter {
         }
     }
 
-    public void initStickyHeader(int headerTop){
+    public void initStickyHeader(int headerTop) {
         mStickyHeaderInitialLocation = headerTop;
     }
 
-    public void onScroll(int scrollY){
+    public void onScroll(int scrollY) {
         mScrolled = true;
         handleFooterStickiness(scrollY);
         handleHeaderStickiness(scrollY);
@@ -88,18 +89,18 @@ public class StickyScrollPresenter {
         return mIsHeaderSticky;
     }
 
-    public void recomputeFooterLocation(int footerTop, int footerLocation){
-        if(mScrolled){
+    public void recomputeFooterLocation(int footerTop, int footerLocation) {
+        if (mScrolled) {
             mStickyFooterInitialTranslation = mDeviceHeight - footerTop - mStickyFooterHeight;
             mStickyFooterInitialLocation = footerTop;
             if (footerLocation > mDeviceHeight - mStickyFooterHeight) {
                 mStickyScrollPresentation.stickFooter(mStickyFooterInitialTranslation);
                 mIsFooterSticky = true;
-            }else{
+            } else {
                 mStickyScrollPresentation.freeFooter();
                 mIsFooterSticky = false;
             }
-        }else{
+        } else {
             initStickyFooter(mStickyFooterHeight, footerTop);
         }
     }

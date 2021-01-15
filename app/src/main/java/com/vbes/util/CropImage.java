@@ -39,7 +39,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Vbe on 2020/3/18.
+ * 图片裁剪器
+ * @author Created by Vbe on 2020/3/18.
  */
 public class CropImage {
     /*
@@ -55,10 +56,14 @@ public class CropImage {
      */
     public static final int PICK_IMAGE_CHOOSER_REQUEST_CODE = 200;
 
-    /** The request code used to request permission to pick image from external storage. */
+    /**
+     * The request code used to request permission to pick image from external storage.
+     */
     public static final int PICK_IMAGE_PERMISSIONS_REQUEST_CODE = 201;
 
-    /** The request code used to request permission to capture image from camera. */
+    /**
+     * The request code used to request permission to capture image from camera.
+     */
     public static final int CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE = 2011;
 
     /**
@@ -67,13 +72,16 @@ public class CropImage {
      */
     public static final int CROP_IMAGE_ACTIVITY_REQUEST_CODE = 203;
 
-    /** The result code used to return error from {@link CropImageActivity}. */
+    /**
+     * The result code used to return error from {@link CropImageActivity}.
+     */
     public static final int CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE = 204;
 
     private static ActivityBuilder activityBuilder;
     // endregion
 
-    private CropImage() {}
+    private CropImage() {
+    }
 
     public static void startPickImageActivity(@NonNull Activity activity) {
         activity.startActivityForResult(getPickImageChooserIntent(activity), PICK_IMAGE_CHOOSER_REQUEST_CODE);
@@ -280,10 +288,15 @@ public class CropImage {
 
     public static final class ActivityBuilder {
 
-        /** The image to crop source Android uri. */
-        @Nullable private final Uri mSource;
+        /**
+         * The image to crop source Android uri.
+         */
+        @Nullable
+        private final Uri mSource;
 
-        /** Options for image crop UX */
+        /**
+         * Options for image crop UX
+         */
         private final CropImageOptions mOptions;
 
         private ActivityBuilder(@Nullable Uri source) {
@@ -299,12 +312,16 @@ public class CropImage {
             return mSource;
         }
 
-        /** Get {@link CropImageActivity} intent to start the activity. */
+        /**
+         * Get {@link CropImageActivity} intent to start the activity.
+         */
         public Intent getIntent(@NonNull Context context) {
             return getIntent(context, CropImageActivity.class);
         }
 
-        /** Get {@link CropImageActivity} intent to start the activity. */
+        /**
+         * Get {@link CropImageActivity} intent to start the activity.
+         */
         public Intent getIntent(@NonNull Context context, @Nullable Class<?> cls) {
             mOptions.validate();
 

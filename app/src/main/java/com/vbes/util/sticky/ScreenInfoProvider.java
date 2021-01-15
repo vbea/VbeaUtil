@@ -11,6 +11,7 @@ import com.vbes.util.sticky.lis.IScreenInfoProvider;
  */
 
 public class ScreenInfoProvider implements IScreenInfoProvider {
+
     private final Context mContext;
 
     public ScreenInfoProvider(Context context) {

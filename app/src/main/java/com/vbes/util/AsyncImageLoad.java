@@ -11,8 +11,8 @@ import java.io.File;
 /**
  * 异步加载图片并设置到ImageView
  * (可设置是否保存图片到缓存目录)
- *
- * Created by Vbe on 2018/10/11.
+ * <p>
+ * @author Created by Vbe on 2018/10/11.
  */
 public class AsyncImageLoad extends AsyncTask<String, Intent, Bitmap> {
     private ImageView mView;
@@ -24,7 +24,8 @@ public class AsyncImageLoad extends AsyncTask<String, Intent, Bitmap> {
     private String savePath;
     private OnLoadListener listener;
 
-    private AsyncImageLoad() {}
+    private AsyncImageLoad() {
+    }
 
     public AsyncImageLoad(Context c, ImageView v) {
         mView = v;

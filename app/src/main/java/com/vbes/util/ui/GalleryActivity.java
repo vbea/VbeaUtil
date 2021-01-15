@@ -45,6 +45,7 @@ import com.vbes.util.matisse.utils.MediaStoreCompat;
 import com.vbes.util.matisse.utils.PathUtils;
 import com.vbes.util.matisse.utils.PhotoMetadataUtils;
 import com.vbes.util.matisse.utils.SingleMediaScanner;
+
 import java.util.ArrayList;
 
 /**
@@ -216,7 +217,8 @@ public class GalleryActivity extends AppCompatActivity implements AlbumCollectio
             if (VbeUtil.notSupportMD())
                 GalleryActivity.this.revokeUriPermission(contentUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
             new SingleMediaScanner(this.getApplicationContext(), path, new SingleMediaScanner.ScanListener() {
-                @Override public void onScanFinish() {
+                @Override
+                public void onScanFinish() {
                     Log.i("SingleMediaScanner", "scan finish!");
                 }
             });

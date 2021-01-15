@@ -32,13 +32,19 @@ import java.io.IOException;
  * Created by Vbe on 2020/3/18.
  */
 public class CropImageActivity extends AppCompatActivity implements CropImageView.OnSetImageUriCompleteListener, CropImageView.OnCropImageCompleteListener {
-    /** The crop image view library widget used in the activity */
+    /**
+     * The crop image view library widget used in the activity
+     */
     private CropImageView mCropImageView;
 
-    /** Persist URI image to crop URI if specific permissions are required */
+    /**
+     * Persist URI image to crop URI if specific permissions are required
+     */
     private Uri mCropImageUri;
 
-    /** the options that were set for the crop image */
+    /**
+     * the options that were set for the crop image
+     */
     private CropImageOptions mOptions;
 
     @Override
@@ -67,14 +73,14 @@ public class CropImageActivity extends AppCompatActivity implements CropImageVie
             if (mCropImageUri == null || mCropImageUri.equals(Uri.EMPTY)) {
                 if (CropImage.isExplicitCameraPermissionRequired(this)) {
                     // request permissions and handle the result in onRequestPermissionsResult()
-                    requestPermissions(new String[] {Manifest.permission.CAMERA}, CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE);
+                    requestPermissions(new String[]{Manifest.permission.CAMERA}, CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE);
                 } else {
                     CropImage.startPickImageActivity(this);
                 }
             } else if (CropImage.isReadExternalStoragePermissionsRequired(this, mCropImageUri)) {
                 // request permissions and handle the result in onRequestPermissionsResult()
                 requestPermissions(
-                        new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                         CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE);
             } else {
                 // no permissions required or already grunted, can start crop image activity
@@ -193,7 +199,7 @@ public class CropImageActivity extends AppCompatActivity implements CropImageVie
                 if (CropImage.isReadExternalStoragePermissionsRequired(this, mCropImageUri)) {
                     // request permissions and handle the result in onRequestPermissionsResult()
                     requestPermissions(
-                            new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                             CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE);
                 } else {
                     // no permissions required or already grunted, can start crop image activity
@@ -245,7 +251,9 @@ public class CropImageActivity extends AppCompatActivity implements CropImageVie
 
     // region: Private methods
 
-    /** Execute crop image and save the result tou output uri. */
+    /**
+     * Execute crop image and save the result tou output uri.
+     */
     protected void cropImage() {
         if (mOptions.noOutputImage) {
             setResult(null, null, 1);
@@ -261,7 +269,9 @@ public class CropImageActivity extends AppCompatActivity implements CropImageVie
         }
     }
 
-    /** Rotate the image in the crop image view. */
+    /**
+     * Rotate the image in the crop image view.
+     */
     protected void rotateImage(int degrees) {
         mCropImageView.rotateImage(degrees);
     }
@@ -286,37 +296,45 @@ public class CropImageActivity extends AppCompatActivity implements CropImageVie
         return outputUri;
     }
 
-    /** Result with cropped image data or error if failed. */
+    /**
+     * Result with cropped image data or error if failed.
+     */
     protected void setResult(Uri uri, Exception error, int sampleSize) {
         int resultCode = error == null ? RESULT_OK : CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE;
         setResult(resultCode, getResultIntent(uri, error, sampleSize));
         finish();
     }
 
-    /** Cancel of cropping activity. */
+    /**
+     * Cancel of cropping activity.
+     */
     protected void setResultCancel() {
         setResult(RESULT_CANCELED);
         finish();
     }
 
-    /** Get intent instance to be used for the result of this activity. */
+    /**
+     * Get intent instance to be used for the result of this activity.
+     */
     protected Intent getResultIntent(Uri uri, Exception error, int sampleSize) {
         CropImage.ActivityResult result = new CropImage.ActivityResult(
-            mCropImageView.getImageUri(),
-            uri,
-            error,
-            mCropImageView.getCropPoints(),
-            mCropImageView.getCropRect(),
-            mCropImageView.getRotatedDegrees(),
-            mCropImageView.getWholeImageRect(),
-            sampleSize);
+                mCropImageView.getImageUri(),
+                uri,
+                error,
+                mCropImageView.getCropPoints(),
+                mCropImageView.getCropRect(),
+                mCropImageView.getRotatedDegrees(),
+                mCropImageView.getWholeImageRect(),
+                sampleSize);
         Intent intent = new Intent();
         intent.putExtras(getIntent());
         intent.putExtra(CropImage.CROP_IMAGE_EXTRA_RESULT, result);
         return intent;
     }
 
-    /** Update the color of a specific menu item to the given color. */
+    /**
+     * Update the color of a specific menu item to the given color.
+     */
     private void updateMenuItemIconColor(Menu menu, int itemId, int color) {
         MenuItem menuItem = menu.findItem(itemId);
         if (menuItem != null) {

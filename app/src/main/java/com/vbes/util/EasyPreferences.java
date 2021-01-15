@@ -4,11 +4,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
- * Created by vbe on 2018/9/18.
+ * 简单化的SharedPreferences实现
+ * @author Created by vbe on 2018/9/18.
  */
 
-public class EasyPreferences
-{
+public class EasyPreferences {
     private static SharedPreferences spf;
     private static SharedPreferences.Editor edt;
 

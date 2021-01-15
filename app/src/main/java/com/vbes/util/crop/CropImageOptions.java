@@ -31,7 +31,9 @@ public class CropImageOptions implements Parcelable {
         }
     };
 
-    /** The shape of the cropping window. */
+    /**
+     * The shape of the cropping window.
+     */
     public CropImageView.CropShape cropShape;
 
     /**
@@ -48,10 +50,14 @@ public class CropImageOptions implements Parcelable {
      */
     public float touchRadius;
 
-    /** whether the guidelines should be on, off, or only showing when resizing. */
+    /**
+     * whether the guidelines should be on, off, or only showing when resizing.
+     */
     public CropImageView.Guidelines guidelines;
 
-    /** The initial scale type of the image in the crop image view */
+    /**
+     * The initial scale type of the image in the crop image view
+     */
     public CropImageView.ScaleType scaleType;
 
     /**
@@ -73,10 +79,14 @@ public class CropImageOptions implements Parcelable {
      */
     public boolean autoZoomEnabled;
 
-    /** if multi-touch should be enabled on the crop box default: false */
+    /**
+     * if multi-touch should be enabled on the crop box default: false
+     */
     public boolean multiTouchEnabled;
 
-    /** The max zoom allowed during cropping. */
+    /**
+     * The max zoom allowed during cropping.
+     */
     public int maxZoom;
     public int themeId = R.style.DefaultTheme;
     /**
@@ -85,37 +95,59 @@ public class CropImageOptions implements Parcelable {
      */
     public float initialCropWindowPaddingRatio;
 
-    /** whether the width to height aspect ratio should be maintained or free to change. */
+    /**
+     * whether the width to height aspect ratio should be maintained or free to change.
+     */
     public boolean fixAspectRatio;
 
-    /** the X value of the aspect ratio. */
+    /**
+     * the X value of the aspect ratio.
+     */
     public int aspectRatioX;
 
-    /** the Y value of the aspect ratio. */
+    /**
+     * the Y value of the aspect ratio.
+     */
     public int aspectRatioY;
 
-    /** the thickness of the guidelines lines in pixels. (in pixels) */
+    /**
+     * the thickness of the guidelines lines in pixels. (in pixels)
+     */
     public float borderLineThickness;
 
-    /** the color of the guidelines lines */
+    /**
+     * the color of the guidelines lines
+     */
     public int borderLineColor;
 
-    /** thickness of the corner line. (in pixels) */
+    /**
+     * thickness of the corner line. (in pixels)
+     */
     public float borderCornerThickness;
 
-    /** the offset of corner line from crop window border. (in pixels) */
+    /**
+     * the offset of corner line from crop window border. (in pixels)
+     */
     public float borderCornerOffset;
 
-    /** the length of the corner line away from the corner. (in pixels) */
+    /**
+     * the length of the corner line away from the corner. (in pixels)
+     */
     public float borderCornerLength;
 
-    /** the color of the corner line */
+    /**
+     * the color of the corner line
+     */
     public int borderCornerColor;
 
-    /** the thickness of the guidelines lines. (in pixels) */
+    /**
+     * the thickness of the guidelines lines. (in pixels)
+     */
     public float guidelinesThickness;
 
-    /** the color of the guidelines lines */
+    /**
+     * the color of the guidelines lines
+     */
     public int guidelinesColor;
 
     /**
@@ -124,10 +156,14 @@ public class CropImageOptions implements Parcelable {
      */
     public int backgroundColor;
 
-    /** the min width the crop window is allowed to be. (in pixels) */
+    /**
+     * the min width the crop window is allowed to be. (in pixels)
+     */
     public int minCropWindowWidth;
 
-    /** the min height the crop window is allowed to be. (in pixels) */
+    /**
+     * the min height the crop window is allowed to be. (in pixels)
+     */
     public int minCropWindowHeight;
 
     /**
@@ -154,64 +190,104 @@ public class CropImageOptions implements Parcelable {
      */
     public int maxCropResultHeight;
 
-    /** the title of the {@link CropImageActivity} */
+    /**
+     * the title of the {@link CropImageActivity}
+     */
     public String activityTitle;
 
-    /** the color to use for action bar items icons */
+    /**
+     * the color to use for action bar items icons
+     */
     public int activityMenuIconColor;
 
-    /** the Android Uri to save the cropped image to */
+    /**
+     * the Android Uri to save the cropped image to
+     */
     public Uri outputUri;
 
-    /** the compression format to use when writing the image */
+    /**
+     * the compression format to use when writing the image
+     */
     public Bitmap.CompressFormat outputCompressFormat;
 
-    /** the quality (if applicable) to use when writing the image (0 - 100) */
+    /**
+     * the quality (if applicable) to use when writing the image (0 - 100)
+     */
     public int outputCompressQuality;
 
-    /** the width to resize the cropped image to (see options) */
+    /**
+     * the width to resize the cropped image to (see options)
+     */
     public int outputRequestWidth;
 
-    /** the height to resize the cropped image to (see options) */
+    /**
+     * the height to resize the cropped image to (see options)
+     */
     public int outputRequestHeight;
 
-    /** the resize method to use on the cropped bitmap (see options documentation) */
+    /**
+     * the resize method to use on the cropped bitmap (see options documentation)
+     */
     public CropImageView.RequestSizeOptions outputRequestSizeOptions;
 
-    /** if the result of crop image activity should not save the cropped image bitmap */
+    /**
+     * if the result of crop image activity should not save the cropped image bitmap
+     */
     public boolean noOutputImage;
 
-    /** the initial rectangle to set on the cropping image after loading */
+    /**
+     * the initial rectangle to set on the cropping image after loading
+     */
     public Rect initialCropWindowRectangle;
 
-    /** the initial rotation to set on the cropping image after loading (0-360 degrees clockwise) */
+    /**
+     * the initial rotation to set on the cropping image after loading (0-360 degrees clockwise)
+     */
     public int initialRotation;
 
-    /** if to allow (all) rotation during cropping (activity) */
+    /**
+     * if to allow (all) rotation during cropping (activity)
+     */
     public boolean allowRotation;
 
-    /** if to allow (all) flipping during cropping (activity) */
+    /**
+     * if to allow (all) flipping during cropping (activity)
+     */
     public boolean allowFlipping;
 
-    /** if to allow counter-clockwise rotation during cropping (activity) */
+    /**
+     * if to allow counter-clockwise rotation during cropping (activity)
+     */
     public boolean allowCounterRotation;
 
-    /** the amount of degrees to rotate clockwise or counter-clockwise */
+    /**
+     * the amount of degrees to rotate clockwise or counter-clockwise
+     */
     public int rotationDegrees;
 
-    /** whether the image should be flipped horizontally */
+    /**
+     * whether the image should be flipped horizontally
+     */
     public boolean flipHorizontally;
 
-    /** whether the image should be flipped vertically */
+    /**
+     * whether the image should be flipped vertically
+     */
     public boolean flipVertically;
 
-    /** optional, the text of the crop menu crop button */
+    /**
+     * optional, the text of the crop menu crop button
+     */
     public CharSequence cropMenuCropButtonTitle;
 
-    /** optional image resource to be used for crop menu crop icon instead of text */
+    /**
+     * optional image resource to be used for crop menu crop icon instead of text
+     */
     public int cropMenuCropButtonIcon;
 
-    /** Init options with defaults. */
+    /**
+     * Init options with defaults.
+     */
     public CropImageOptions() {
 
         DisplayMetrics dm = Resources.getSystem().getDisplayMetrics();
@@ -274,7 +350,9 @@ public class CropImageOptions implements Parcelable {
         cropMenuCropButtonIcon = 0;
     }
 
-    /** Create object from parcel. */
+    /**
+     * Create object from parcel.
+     */
     protected CropImageOptions(Parcel in) {
         cropShape = CropImageView.CropShape.values()[in.readInt()];
         snapRadius = in.readFloat();

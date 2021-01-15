@@ -43,6 +43,7 @@ import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT;
 
 @SuppressWarnings("unused")
 public final class SelectionCreator {
+
     private final GalleryUtil mGallery;
     private final SelectionSpec mSelectionSpec;
 

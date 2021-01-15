@@ -27,6 +27,7 @@ import javax.microedition.khronos.egl.EGL10;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.egl.EGLContext;
 import javax.microedition.khronos.egl.EGLDisplay;
+
 /**
  * Created by Vbe on 2020/3/18.
  */
@@ -35,19 +36,29 @@ public class BitmapUtils {
 
     public static final RectF EMPTY_RECT_F = new RectF();
 
-    /** Reusable rectangle for general internal usage */
+    /**
+     * Reusable rectangle for general internal usage
+     */
     public static final RectF RECT = new RectF();
 
-    /** Reusable point for general internal usage */
+    /**
+     * Reusable point for general internal usage
+     */
     public static final float[] POINTS = new float[6];
 
-    /** Reusable point for general internal usage */
+    /**
+     * Reusable point for general internal usage
+     */
     public static final float[] POINTS2 = new float[6];
 
-    /** Used to know the max texture size allowed to be rendered */
+    /**
+     * Used to know the max texture size allowed to be rendered
+     */
     private static int mMaxTextureSize;
 
-    /** used to save bitmaps during state save and restore so not to reload them. */
+    /**
+     * used to save bitmaps during state save and restore so not to reload them.
+     */
     public static Pair<String, WeakReference<Bitmap>> mStateBitmap;
 
     /**
@@ -93,7 +104,9 @@ public class BitmapUtils {
         return new RotateBitmapResult(bitmap, degrees);
     }
 
-    /** Decode bitmap from stream using sampling to get bitmap with the requested limit. */
+    /**
+     * Decode bitmap from stream using sampling to get bitmap with the requested limit.
+     */
     public static BitmapSampled decodeSampledBitmap(Context context, Uri uri, int reqWidth, int reqHeight) {
 
         try {
@@ -102,7 +115,7 @@ public class BitmapUtils {
             // First decode with inJustDecodeBounds=true to check dimensions
             BitmapFactory.Options options = decodeImageForOption(resolver, uri);
 
-            if(options.outWidth  == -1 && options.outHeight == -1)
+            if (options.outWidth == -1 && options.outHeight == -1)
                 throw new RuntimeException("File is not a picture");
 
             // Calculate inSampleSize
@@ -171,7 +184,7 @@ public class BitmapUtils {
      * image that contains the requires rectangle, rotate and then crop again a sub rectangle.
      *
      * @param scale how much to scale the cropped image part, use 0.5 to lower the image by half (OOM
-     *     handling)
+     *              handling)
      */
     private static Bitmap cropBitmapObjectWithScale(
             Bitmap bitmap,
@@ -275,42 +288,58 @@ public class BitmapUtils {
         }
     }
 
-    /** Get left value of the bounding rectangle of the given points. */
+    /**
+     * Get left value of the bounding rectangle of the given points.
+     */
     public static float getRectLeft(float[] points) {
         return Math.min(Math.min(Math.min(points[0], points[2]), points[4]), points[6]);
     }
 
-    /** Get top value of the bounding rectangle of the given points. */
+    /**
+     * Get top value of the bounding rectangle of the given points.
+     */
     public static float getRectTop(float[] points) {
         return Math.min(Math.min(Math.min(points[1], points[3]), points[5]), points[7]);
     }
 
-    /** Get right value of the bounding rectangle of the given points. */
+    /**
+     * Get right value of the bounding rectangle of the given points.
+     */
     public static float getRectRight(float[] points) {
         return Math.max(Math.max(Math.max(points[0], points[2]), points[4]), points[6]);
     }
 
-    /** Get bottom value of the bounding rectangle of the given points. */
+    /**
+     * Get bottom value of the bounding rectangle of the given points.
+     */
     public static float getRectBottom(float[] points) {
         return Math.max(Math.max(Math.max(points[1], points[3]), points[5]), points[7]);
     }
 
-    /** Get width of the bounding rectangle of the given points. */
+    /**
+     * Get width of the bounding rectangle of the given points.
+     */
     public static float getRectWidth(float[] points) {
         return getRectRight(points) - getRectLeft(points);
     }
 
-    /** Get height of the bounding rectangle of the given points. */
+    /**
+     * Get height of the bounding rectangle of the given points.
+     */
     public static float getRectHeight(float[] points) {
         return getRectBottom(points) - getRectTop(points);
     }
 
-    /** Get horizontal center value of the bounding rectangle of the given points. */
+    /**
+     * Get horizontal center value of the bounding rectangle of the given points.
+     */
     public static float getRectCenterX(float[] points) {
         return (getRectRight(points) + getRectLeft(points)) / 2f;
     }
 
-    /** Get vertical center value of the bounding rectangle of the given points. */
+    /**
+     * Get vertical center value of the bounding rectangle of the given points.
+     */
     public static float getRectCenterY(float[] points) {
         return (getRectBottom(points) + getRectTop(points)) / 2f;
     }
@@ -359,7 +388,7 @@ public class BitmapUtils {
      *
      * @param uri the uri to write the bitmap to, if null
      * @return the uri where the image was saved in, either the given uri or new pointing to temp
-     *     file.
+     * file.
      */
     public static Uri writeTempStateStoreBitmap(Context context, Bitmap bitmap, Uri uri) {
         try {
@@ -381,7 +410,9 @@ public class BitmapUtils {
         }
     }
 
-    /** Write the given bitmap to the given uri using the given compression. */
+    /**
+     * Write the given bitmap to the given uri using the given compression.
+     */
     public static void writeBitmapToUri(
             Context context,
             Bitmap bitmap,
@@ -398,7 +429,9 @@ public class BitmapUtils {
         }
     }
 
-    /** Resize the given bitmap to the given width/height by the given option.<br> */
+    /**
+     * Resize the given bitmap to the given width/height by the given option.<br>
+     */
     public static Bitmap resizeBitmap(Bitmap bitmap, int reqWidth, int reqHeight, CropImageView.RequestSizeOptions options) {
         try {
             if (reqWidth > 0 && reqHeight > 0 && (options == CropImageView.RequestSizeOptions.RESIZE_FIT || options == CropImageView.RequestSizeOptions.RESIZE_INSIDE || options == CropImageView.RequestSizeOptions.RESIZE_EXACT)) {
@@ -432,8 +465,8 @@ public class BitmapUtils {
      * Crop image bitmap from URI by decoding it with specific width and height to down-sample if
      * required.
      *
-     * @param orgWidth used to get rectangle from points (handle edge cases to limit rectangle)
-     * @param orgHeight used to get rectangle from points (handle edge cases to limit rectangle)
+     * @param orgWidth    used to get rectangle from points (handle edge cases to limit rectangle)
+     * @param orgHeight   used to get rectangle from points (handle edge cases to limit rectangle)
      * @param sampleMulti used to increase the sampling of the image to handle memory issues.
      */
     private static BitmapSampled cropBitmap(
@@ -542,15 +575,15 @@ public class BitmapUtils {
                     }
 
                     result = cropBitmapObjectWithScale(
-                                    fullBitmap,
-                                    points2,
-                                    degreesRotated,
-                                    fixAspectRatio,
-                                    aspectRatioX,
-                                    aspectRatioY,
-                                    1,
-                                    flipHorizontally,
-                                    flipVertically);
+                            fullBitmap,
+                            points2,
+                            degreesRotated,
+                            fixAspectRatio,
+                            aspectRatioX,
+                            aspectRatioY,
+                            1,
+                            flipHorizontally,
+                            flipVertically);
                 } finally {
                     if (result != fullBitmap) {
                         fullBitmap.recycle();
@@ -568,7 +601,9 @@ public class BitmapUtils {
         return new BitmapSampled(result, sampleSize);
     }
 
-    /** Decode image from uri using "inJustDecodeBounds" to get the image dimensions. */
+    /**
+     * Decode image from uri using "inJustDecodeBounds" to get the image dimensions.
+     */
     private static BitmapFactory.Options decodeImageForOption(ContentResolver resolver, Uri uri) throws FileNotFoundException {
         InputStream stream = null;
         try {
@@ -795,12 +830,18 @@ public class BitmapUtils {
 
     // region: Inner class: BitmapSampled
 
-    /** Holds bitmap instance and the sample size that the bitmap was loaded/cropped with. */
+    /**
+     * Holds bitmap instance and the sample size that the bitmap was loaded/cropped with.
+     */
     public static final class BitmapSampled {
-        /** The bitmap instance */
+        /**
+         * The bitmap instance
+         */
         public final Bitmap bitmap;
 
-        /** The sample size used to lower the size of the bitmap (1,2,4,8,...) */
+        /**
+         * The sample size used to lower the size of the bitmap (1,2,4,8,...)
+         */
         final int sampleSize;
 
         BitmapSampled(Bitmap bitmap, int sampleSize) {
@@ -812,11 +853,17 @@ public class BitmapUtils {
 
     // region: Inner class: RotateBitmapResult
 
-    /** The result of {@link #rotateBitmapByExif(android.graphics.Bitmap, ExifInterface)}. */
+    /**
+     * The result of {@link #rotateBitmapByExif(android.graphics.Bitmap, ExifInterface)}.
+     */
     public static final class RotateBitmapResult {
-        /** The loaded bitmap */
+        /**
+         * The loaded bitmap
+         */
         public final Bitmap bitmap;
-        /** The degrees the image was rotated */
+        /**
+         * The degrees the image was rotated
+         */
         public final int degrees;
 
         RotateBitmapResult(Bitmap bitmap, int degrees) {

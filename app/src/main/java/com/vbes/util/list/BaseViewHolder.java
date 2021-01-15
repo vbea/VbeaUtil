@@ -101,7 +101,14 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
 
     public void setBackgroundColor(@IdRes int viewId, @ColorInt int color) {
         View view = getView(viewId);
-        view.setBackgroundColor(color);
+        if (view != null)
+            view.setBackgroundColor(color);
+    }
+
+    public void setBackground(@IdRes int viewId, Drawable background) {
+        View view = getView(viewId);
+        if (view != null)
+            view.setBackground(background);
     }
 
     public void setVisible(@IdRes int viewId, boolean visible) {
@@ -120,6 +127,12 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         View view = this.getView(viewId);
         if (view != null)
             view.setEnabled(enable);
+    }
+
+    public void setClickable(@IdRes int viewId, boolean able) {
+        View view = this.getView(viewId);
+        if (view != null)
+            view.setClickable(able);
     }
 
     public void setChecked(@IdRes int viewId, boolean checked) {

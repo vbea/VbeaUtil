@@ -23,7 +23,7 @@ public abstract class BaseListAdapter<T> extends RecyclerView.Adapter<BaseViewHo
     protected List<T> mList;
     private BaseListAdapter.OnItemClickListener mListener;
     private BaseListAdapter.OnItemLongClickListener longClickListener;
-    protected BaseViewHolder holder;
+    //protected BaseViewHolder holder;
     private FrameLayout mEmptyLayout;
     public BaseListAdapter(@LayoutRes int resId) {
         layoutRes = resId;
@@ -37,7 +37,7 @@ public abstract class BaseListAdapter<T> extends RecyclerView.Adapter<BaseViewHo
             return new BaseViewHolder(mEmptyLayout);
         } else {
             View mView = LayoutInflater.from(p1.getContext()).inflate(layoutRes, p1, false);
-            holder = new BaseViewHolder(mView);
+            BaseViewHolder holder = new BaseViewHolder(mView);
             if (mListener != null)
                 holder.setOnItemClickListener(mListener);
             if (longClickListener != null)
@@ -49,27 +49,24 @@ public abstract class BaseListAdapter<T> extends RecyclerView.Adapter<BaseViewHo
     @Override
     public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
         int viewType = holder.getItemViewType();
-        switch (viewType) {
-            case NORMAL_VIEW:
+        if (viewType == EMPTY_VIEW) {
+            //empty view
+        } else {
+            if (mList == null || position >= mList.size()) {
+                onRender(holder, null, position);
+            } else {
                 onRender(holder, mList.get(position), position);
-                break;
-            case EMPTY_VIEW:
-                break;
-            default:
-                onRender(holder, mList.get(position), position);
-                break;
+            }
         }
     }
 
     @Override
     public int getItemViewType(int position) {
         if (getEmptyViewCount() == 1) {
-            switch (position) {
-                case 0:
-                    return EMPTY_VIEW;
-                default:
-                    return NORMAL_VIEW;
+            if (position == 0) {
+                return EMPTY_VIEW;
             }
+            return NORMAL_VIEW;
         }
         return super.getItemViewType(position);
     }

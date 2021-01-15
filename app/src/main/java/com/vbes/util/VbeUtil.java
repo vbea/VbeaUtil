@@ -72,8 +72,8 @@ import com.vbes.util.lis.DialogResult;
 import com.vbes.util.lis.DownloadListener;
 import com.vbes.util.view.DialogEditView;
 
-public class VbeUtil
-{
+public class VbeUtil {
+
 	public static String SD_PATH = Environment.getExternalStorageDirectory() + "";
 	private DownloadListener agent;
 

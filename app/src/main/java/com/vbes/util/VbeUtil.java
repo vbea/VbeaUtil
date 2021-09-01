@@ -71,6 +71,7 @@ import android.telephony.TelephonyManager;
 import com.vbes.util.lis.DialogResult;
 import com.vbes.util.lis.DownloadListener;
 import com.vbes.util.view.DialogEditView;
+import com.vbes.util.view.MyAlertDialog;
 
 /**
  * 各种实用方法合集
@@ -485,12 +486,6 @@ public class VbeUtil {
         if (msg == null) return;
         //String rmsg = msg.replace(",", "\n");
         new MyAlertDialog(context).setTitle(title).setMessage(msg).setNegativeButton(ok, lis).create().show();
-    }
-
-    public static class MyAlertDialog extends AlertDialog.Builder {
-        public MyAlertDialog(Context c) {
-            super(c);
-        }
     }
 
     public static String Join(String splitter, String[] strs) {
@@ -1331,6 +1326,36 @@ public class VbeUtil {
             e.printStackTrace();
         }
         return res;
+    }
+
+    public static <T extends Serializable> T[][] deepCopy(T[][] arrays) {
+        T[][] arr = arrays.clone();
+        for (int i = 0; i < arrays.length; i++) {
+            arr[i] = deepCopy(arrays[i]);
+        }
+        return arr;
+    }
+
+    public static <T extends Serializable> T[] deepCopy(T[] array) {
+        T[] arr = array.clone();
+        for (int i = 0; i < array.length; i++) {
+            arr[i] = deepCopy(array[i]);
+        }
+        return arr;
+    }
+
+    public static <T extends Serializable> T deepCopy(T object) {
+        try {
+            ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+            ObjectOutputStream out = new ObjectOutputStream(byteOut);
+            out.writeObject(object);
+            ByteArrayInputStream byteIn = new ByteArrayInputStream(byteOut.toByteArray());
+            ObjectInputStream in = new ObjectInputStream(byteIn);
+            return (T)in.readObject();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.vbes.util.list;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
@@ -49,6 +50,10 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
             this.views.put(id, view);
         }
         return (T) view;
+    }
+
+    public Context getContext() {
+        return this.mView.getContext();
     }
 
     public void setText(@IdRes int viewId, CharSequence value) {
@@ -114,6 +119,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
             view.setBackgroundColor(color);
     }
 
+    @SuppressLint("NewApi")
     public void setBackground(@IdRes int viewId, Drawable background) {
         View view = getView(viewId);
         if (view != null)

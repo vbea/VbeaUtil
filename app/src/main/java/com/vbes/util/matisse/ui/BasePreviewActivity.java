@@ -4,10 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.animation.FastOutSlowInInterpolator;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.viewpager.widget.ViewPager;
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -25,7 +25,7 @@ import com.vbes.util.matisse.ui.widget.CheckRadioView;
 import com.vbes.util.matisse.ui.widget.CheckView;
 import com.vbes.util.matisse.ui.widget.IncapableDialog;
 import com.vbes.util.matisse.utils.PhotoMetadataUtils;
-import com.vbes.util.lis.OnFragmentInteractionListener;
+import com.vbes.util.interfaces.OnFragmentInteractionListener;
 
 public abstract class BasePreviewActivity extends AppCompatActivity implements View.OnClickListener,
         ViewPager.OnPageChangeListener, OnFragmentInteractionListener {

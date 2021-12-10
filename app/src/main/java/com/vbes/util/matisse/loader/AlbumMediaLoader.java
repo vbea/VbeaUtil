@@ -6,7 +6,7 @@ import android.database.MatrixCursor;
 import android.database.MergeCursor;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.support.v4.content.CursorLoader;
+import androidx.loader.content.CursorLoader;
 
 import com.vbes.util.matisse.entity.Album;
 import com.vbes.util.matisse.entity.Item;

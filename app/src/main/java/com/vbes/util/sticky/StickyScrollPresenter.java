@@ -1,6 +1,6 @@
 package com.vbes.util.sticky;
 
-import android.support.annotation.StyleableRes;
+import androidx.annotation.StyleableRes;
 
 import com.vbes.util.sticky.lis.IResourceProvider;
 import com.vbes.util.sticky.lis.IScreenInfoProvider;

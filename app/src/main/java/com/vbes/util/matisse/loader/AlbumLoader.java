@@ -8,7 +8,7 @@ import android.database.MergeCursor;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
-import android.support.v4.content.CursorLoader;
+import androidx.loader.content.CursorLoader;
 
 import com.vbes.util.media.MimeType;
 import com.vbes.util.matisse.entity.Album;

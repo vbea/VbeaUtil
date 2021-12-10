@@ -18,7 +18,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.math.BigDecimal;
 //import junit.framework.Assert;
@@ -53,14 +52,15 @@ import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.content.FileProvider;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
-import android.support.v4.util.Pair;
-import android.support.v7.app.AlertDialog;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.content.FileProvider;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
+import androidx.core.util.Pair;
+import androidx.appcompat.app.AlertDialog;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -68,8 +68,8 @@ import android.widget.Toast;
 import android.webkit.MimeTypeMap;
 import android.telephony.TelephonyManager;
 
-import com.vbes.util.lis.DialogResult;
-import com.vbes.util.lis.DownloadListener;
+import com.vbes.util.interfaces.DialogResult;
+import com.vbes.util.interfaces.DownloadListener;
 import com.vbes.util.view.DialogEditView;
 import com.vbes.util.view.MyAlertDialog;
 
@@ -190,9 +190,36 @@ public class VbeUtil {
         return s;
     }
 
-    public static byte[] bmpToByteArray(final Bitmap bmp, final boolean needRecycle) {
+    /**
+     * png图片换为字节数组
+     * @param bmp Bitmap图片
+     * @param needRecycle 是否需要回收
+     * @return 字节数组
+     */
+    public static byte[] pngToByteArray(final Bitmap bmp, final boolean needRecycle) {
+        return bmpToByteArray(bmp, CompressFormat.PNG, needRecycle);
+    }
+
+    /**
+     * jpg图片换为字节数组
+     * @param bmp Bitmap图片
+     * @param needRecycle 是否需要回收
+     * @return 字节数组
+     */
+    public static byte[] jpgToByteArray(final Bitmap bmp, final boolean needRecycle) {
+        return bmpToByteArray(bmp, CompressFormat.JPEG, needRecycle);
+    }
+
+    /**
+     * 图片转换为字节数组
+     * @param bmp Bitmap图片
+     * @param format 图片格式
+     * @param needRecycle 是否需要回收
+     * @return 字节数组
+     */
+    public static byte[] bmpToByteArray(final Bitmap bmp, Bitmap.CompressFormat format, final boolean needRecycle) {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
-        bmp.compress(CompressFormat.PNG, 100, output);
+        bmp.compress(format, 100, output);
         if (needRecycle) {
             bmp.recycle();
         }
@@ -303,6 +330,7 @@ public class VbeUtil {
     /**
      * 以最省内存的方式读取图片
      */
+    @RequiresApi(api = Build.VERSION_CODES.DONUT)
     public static Bitmap readBitmap(String path) {
         try {
             FileInputStream stream = new FileInputStream(new File(path));
@@ -323,6 +351,7 @@ public class VbeUtil {
     /**
      * 以最省内存的方式读取图片
      */
+    @RequiresApi(api = Build.VERSION_CODES.DONUT)
     public static Bitmap readBitmap(File file) {
         try {
             FileInputStream stream = new FileInputStream(file);
@@ -808,12 +837,14 @@ public class VbeUtil {
         return (Build.VERSION.SDK_INT >= 30);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public static boolean hasPermission(Context c, String p) {
         if (isAndroidM())
             return c.checkSelfPermission(p) == PackageManager.PERMISSION_GRANTED;
         else return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public static boolean hasAllPermissions(Context c, String... p) {
         if (isAndroidM()) {
             for (String s : p) {
@@ -832,6 +863,7 @@ public class VbeUtil {
         return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public static boolean checkSelfPermission(Context c, String... p) {
         if (isAndroidM()) {
             for (String i : p) {
@@ -854,6 +886,7 @@ public class VbeUtil {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
     public static void addClipboard(Context c, String label, String msg) {
         ClipboardManager cbm = (ClipboardManager) c.getSystemService(Context.CLIPBOARD_SERVICE);
         cbm.setPrimaryClip(ClipData.newPlainText(label, msg));
@@ -865,6 +898,7 @@ public class VbeUtil {
      * @param c   上下文
      * @param msg 文本内容
      */
+    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
     public static void addClipboard(Context c, String msg) {
         ClipboardManager cbm = (ClipboardManager) c.getSystemService(Context.CLIPBOARD_SERVICE);
         cbm.setPrimaryClip(ClipData.newPlainText("VbeUtil", msg));
@@ -895,6 +929,7 @@ public class VbeUtil {
      *
      * @return
      */
+    @Deprecated
     public static String getSerialNo() {
         return Build.getSerial();
     }
@@ -905,6 +940,7 @@ public class VbeUtil {
      * @param context
      * @return
      */
+    @Deprecated
     public static String getDeviceId(Context context) {
         StringBuilder deviceId = new StringBuilder();
         try {
@@ -1020,6 +1056,7 @@ public class VbeUtil {
         return apiKey;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
     public static int getStatusBarHeight(Activity p) {
         Rect rect = new Rect();
         p.getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
@@ -1240,6 +1277,7 @@ public class VbeUtil {
      * @param bitmap 要模糊的图片
      * @return
      */
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     public static Bitmap blurBitmap(Context context, Bitmap bitmap) {
         try {
             Bitmap outBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
@@ -1313,6 +1351,12 @@ public class VbeUtil {
         return res;
     }
 
+    /**
+     * 深拷贝二维数组
+     *
+     * @param arrays 源数组
+     * @return 拷贝后的数组
+     */
     public static <T extends Serializable> T[][] deepCopy(T[][] arrays) {
         T[][] arr = arrays.clone();
         for (int i = 0; i < arrays.length; i++) {
@@ -1321,6 +1365,12 @@ public class VbeUtil {
         return arr;
     }
 
+    /**
+     * 深拷贝泛型数组
+     *
+     * @param array 源数组
+     * @return 拷贝后的数组
+     */
     public static <T extends Serializable> T[] deepCopy(T[] array) {
         T[] arr = array.clone();
         for (int i = 0; i < array.length; i++) {
@@ -1329,6 +1379,12 @@ public class VbeUtil {
         return arr;
     }
 
+    /**
+     * 深拷贝对象(基于Serializable)
+     *
+     * @param object 源对象
+     * @return 拷贝后的对象
+     */
     public static <T extends Serializable> T deepCopy(T object) {
         try {
             ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
@@ -1346,9 +1402,10 @@ public class VbeUtil {
     /**
      * Base64转换为图片
      *
-     * @param base64
-     * @return
+     * @param base64 待转换的base64
+     * @return 转换后的图片
      */
+    @RequiresApi(api = Build.VERSION_CODES.FROYO)
     public static Bitmap base64ToBitmap(String base64) {
         Bitmap bitmap = null;
         try {
@@ -1358,6 +1415,27 @@ public class VbeUtil {
             e.printStackTrace();
         }
         return bitmap;
+    }
+
+    /**
+     * 图片转换为Base64
+     *
+     * @param src 待转换的图片
+     * @param format 图片格式
+     * @param needRecycle 是否需要回收
+     * @return 图片的Base64代码
+     */
+    @RequiresApi(api = Build.VERSION_CODES.FROYO)
+    public static String bitmapToBase64(Bitmap src, Bitmap.CompressFormat format, boolean needRecycle) {
+        String base64 = "";
+        try {
+            byte[] bitmapArray = bmpToByteArray(src, format, needRecycle);
+            byte[] encode = Base64.encode(bitmapArray, Base64.DEFAULT);
+            base64 = new String(encode);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return base64;
     }
 
     public static int spanCount(Context context, int gridExpectedSize) {
@@ -1370,23 +1448,28 @@ public class VbeUtil {
         return spanCount;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Deprecated
     public static void startActivityOption(Activity context, Intent intent, View view, String shareName) {
         startActivityOptions(context, intent, view, shareName, false);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public static void startActivityOptions(Activity context, Intent intent, View view, String shareName) {
         startActivityOptions(context, intent, view, shareName, true);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.ECLAIR)
     public static void startActivityOptions(Activity context, Class<?> cls) {
         startActivityOptions(context, new Intent(context, cls));
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.ECLAIR)
     public static void startActivityForResult(Activity context, Class<?> cls, int requestCode) {
         startActivityForResult(requestCode, context, new Intent(context, cls));
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.ECLAIR)
     public static void startActivityOptions(Activity context, Intent intent, Pair... pairs) {
         try {
             if (isSupportMD()) {
@@ -1401,6 +1484,7 @@ public class VbeUtil {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.ECLAIR)
     public static void startActivityForResult(int requestCode, Activity context, Intent intent, Pair<View, String>... pairs) {
         try {
             if (isSupportMD()) {
@@ -1415,6 +1499,7 @@ public class VbeUtil {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private static void startActivityOptions(Activity context, Intent intent, View view, String shareName, boolean setName) {
         try {
             if (isSupportMD()) {

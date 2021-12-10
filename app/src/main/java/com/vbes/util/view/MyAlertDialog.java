@@ -1,7 +1,7 @@
 package com.vbes.util.view;
 
 import android.content.Context;
-import android.support.v7.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 
 /**
  * Created by Vbe on 2021/1/18.

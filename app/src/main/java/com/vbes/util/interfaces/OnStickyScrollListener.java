@@ -1,4 +1,4 @@
-package com.vbes.util.lis;
+package com.vbes.util.interfaces;
 
 /**
  * Created by Vbe on 2020/12/17.

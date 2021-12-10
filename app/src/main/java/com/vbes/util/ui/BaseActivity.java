@@ -8,15 +8,15 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.ColorInt;
-import android.support.annotation.ColorRes;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.IdRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.IdRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
@@ -28,7 +28,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.vbes.util.R;
 import com.vbes.util.VbeUtil;
-import com.vbes.util.lis.DialogResult;
+import com.vbes.util.interfaces.DialogResult;
+
+import java.io.File;
 
 /**
  * Created by Vbe on 2021/2/3.
@@ -175,6 +177,14 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void displayImage(String url, ImageView imageView) {
         Glide.with(this).load(url).into(imageView);
+    }
+
+    public void displayImage(File file, ImageView imageView) {
+        Glide.with(this).asBitmap().load(file).into(imageView);
+    }
+
+    public <T extends View> T bind(@IdRes int id) {
+        return getView(id);
     }
 
     @SuppressWarnings("unchecked")

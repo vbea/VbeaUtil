@@ -1,6 +1,6 @@
 package com.vbes.util.sticky.lis;
 
-import android.support.annotation.StyleableRes;
+import androidx.annotation.StyleableRes;
 
 /**
  * Created by Vbe on 2020/12/17.

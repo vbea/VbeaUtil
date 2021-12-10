@@ -5,12 +5,10 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.Nullable;
-import android.util.Log;
+
+import androidx.annotation.DrawableRes;
+import androidx.annotation.Nullable;
 
 /**
  * 发送通知工具

@@ -1,24 +1,34 @@
 package com.vbes.util.list;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+
+import android.os.Build;
 import android.view.View;
 import android.graphics.Rect;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.ItemDecoration;
+
+import androidx.annotation.RequiresApi;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.ItemDecoration;
 
 import com.vbes.util.R;
 
+@RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
 public class DividerDecoration extends ItemDecoration {
 
     private Drawable drawable;
     private final Rect mBounds = new Rect();
 
     public DividerDecoration(Context context) {
-        drawable = ContextCompat.getDrawable(context, R.drawable.ic_divider);
+        this(context, R.drawable.ic_divider);
+    }
+
+    public DividerDecoration(Context context, @DrawableRes int id) {
+        drawable = ContextCompat.getDrawable(context, id);
 		/*TypedArray a = context.obtainStyledAttributes(new int[]{R.attr.divider});
 		drawable = a.getDrawable(0);
 		a.recycle();*/

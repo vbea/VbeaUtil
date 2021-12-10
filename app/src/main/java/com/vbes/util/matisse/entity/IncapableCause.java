@@ -1,8 +1,8 @@
 package com.vbes.util.matisse.entity;
 
 import android.content.Context;
-import android.support.annotation.IntDef;
-import android.support.v4.app.FragmentActivity;
+import androidx.annotation.IntDef;
+import androidx.fragment.app.FragmentActivity;
 import android.widget.Toast;
 
 import com.vbes.util.matisse.ui.widget.IncapableDialog;

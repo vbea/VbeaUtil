@@ -1,4 +1,4 @@
-package com.vbes.util.lis;
+package com.vbes.util.interfaces;
 
 public interface DownloadListener {
     void process(long total);

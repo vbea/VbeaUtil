@@ -2,7 +2,7 @@ package com.vbes.util.sticky;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.annotation.StyleableRes;
+import androidx.annotation.StyleableRes;
 import android.util.AttributeSet;
 
 import com.vbes.util.sticky.lis.IResourceProvider;

@@ -1,14 +1,14 @@
 package com.vbes.util.matisse.entity;
 
 import android.content.pm.ActivityInfo;
-import android.support.annotation.StyleRes;
+import androidx.annotation.StyleRes;
 
 import com.vbes.util.R;
 import com.vbes.util.engine.ImageEngine;
 import com.vbes.util.matisse.Filter;
 import com.vbes.util.media.MimeType;
-import com.vbes.util.lis.OnCheckedListener;
-import com.vbes.util.lis.OnSelectedListener;
+import com.vbes.util.interfaces.OnCheckedListener;
+import com.vbes.util.interfaces.OnSelectedListener;
 
 import java.util.List;
 import java.util.Set;

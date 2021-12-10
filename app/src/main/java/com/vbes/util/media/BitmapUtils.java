@@ -9,8 +9,8 @@ import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.net.Uri;
-import android.support.media.ExifInterface;
-import android.support.v4.util.Pair;
+import androidx.exifinterface.media.ExifInterface;
+import androidx.core.util.Pair;
 import android.util.Log;
 
 import com.vbes.util.view.CropImageView;

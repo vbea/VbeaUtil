@@ -1,7 +1,7 @@
 package com.vbes.util.matisse.ui;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.vbes.util.matisse.entity.Item;
 import com.vbes.util.matisse.entity.SelectionSpec;

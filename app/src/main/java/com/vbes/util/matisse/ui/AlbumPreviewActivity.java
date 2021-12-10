@@ -2,7 +2,7 @@ package com.vbes.util.matisse.ui;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.vbes.util.matisse.entity.Album;
 import com.vbes.util.matisse.entity.Item;

@@ -3,13 +3,13 @@ package com.vbes.util.view;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v4.widget.NestedScrollView;
+import androidx.core.widget.NestedScrollView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
 import com.vbes.util.R;
-import com.vbes.util.lis.OnStickyScrollListener;
+import com.vbes.util.interfaces.OnStickyScrollListener;
 import com.vbes.util.sticky.PropertySetter;
 import com.vbes.util.sticky.ResourceProvider;
 import com.vbes.util.sticky.ScreenInfoProvider;

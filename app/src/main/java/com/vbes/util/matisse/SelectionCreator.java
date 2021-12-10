@@ -1,4 +1,4 @@
-package com.vbes.util.media;
+package com.vbes.util.matisse;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,11 +12,11 @@ import androidx.fragment.app.Fragment;
 
 import com.vbes.util.GalleryUtil;
 import com.vbes.util.engine.ImageEngine;
-import com.vbes.util.matisse.Filter;
 import com.vbes.util.matisse.entity.CaptureStrategy;
 import com.vbes.util.matisse.entity.SelectionSpec;
 import com.vbes.util.interfaces.OnCheckedListener;
 import com.vbes.util.interfaces.OnSelectedListener;
+import com.vbes.util.media.MimeType;
 import com.vbes.util.ui.GalleryActivity;
 
 import java.lang.annotation.Retention;
@@ -104,6 +104,12 @@ public final class SelectionCreator {
 
     public SelectionCreator countable(boolean countable) {
         mSelectionSpec.countable = countable;
+        return this;
+    }
+
+    public SelectionCreator immediateSelect(boolean immediate) {
+        mSelectionSpec.countable = false;
+        mSelectionSpec.immediate = immediate;
         return this;
     }
 

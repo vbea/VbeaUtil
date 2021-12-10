@@ -18,9 +18,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.math.BigDecimal;
 //import junit.framework.Assert;
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
@@ -801,40 +803,74 @@ public class VbeUtil {
         return sb.toString().substring(1);
     }
 
+    /**
+     * Android 5-
+     */
     public static boolean notSupportMD() {
         return Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP;
     }
 
+    /**
+     * Android 5+
+     */
     public static boolean isSupportMD() {
         return Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT;
     }
 
+    /**
+     * Android 5
+     */
     public static boolean isAndroidL() {
         return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
     }
 
+    /**
+     * Android 6
+     */
     public static boolean isAndroidM() {
         return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M);
     }
 
+    /**
+     * Android 7
+     */
     public static boolean isAndroidN() {
         return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N);
     }
 
+    /**
+     * Android 8
+     */
     public static boolean isAndroidO() {
         return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O);
     }
 
+    /**
+     * Android 9
+     */
     public static boolean isAndroidP() {
         return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P);
     }
 
+    /**
+     * Android 10
+     */
     public static boolean isAndroidQ() {
         return (Build.VERSION.SDK_INT >= 29);
     }
 
+    /**
+     * Android 11
+     */
     public static boolean isAndroidR() {
         return (Build.VERSION.SDK_INT >= 30);
+    }
+
+    /**
+     * Android 12
+     */
+    public static boolean isAndroidS() {
+        return (Build.VERSION.SDK_INT >= 31);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -1550,5 +1586,19 @@ public class VbeUtil {
      */
     public static void runDelayed(Runnable runnable, long delayed) {
         new Handler().postDelayed(runnable, delayed);
+    }
+
+    /**
+     * Android 11判断是都能够管理所有文件
+     * @param context 上下文
+     * @return 是否有权限
+     */
+    @RequiresApi(api = Build.VERSION_CODES.DONUT)
+    public static boolean canAccessAllFile(Context context) {
+        if (isAndroidR()) {
+            return Environment.isExternalStorageManager();
+        } else {
+            return hasAllPermissions(context, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
     }
 }

@@ -4,15 +4,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.viewpager.widget.ViewPager;
-import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.viewpager.widget.ViewPager;
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.vbes.util.R;
 import com.vbes.util.VbeUtil;
@@ -178,6 +179,15 @@ public abstract class BasePreviewActivity extends AppCompatActivity implements V
         if (v.getId() == R.id.button_back) {
             onBackPressed();
         } else if (v.getId() == R.id.button_apply) {
+            if (mSpec.singleSelectionModeEnabled() && mSpec.immediate) {
+                Item item = mAdapter.getMediaItem(mPager.getCurrentItem());
+                if (assertAddSelection(item)) {
+                    mSelectedCollection.add(item);
+                } else {
+                    VbeUtil.toastShortMessage(this, R.string.error_file_type);
+                    return;
+                }
+            }
             sendBackResult(true);
             finish();
         }
@@ -252,24 +262,30 @@ public abstract class BasePreviewActivity extends AppCompatActivity implements V
 
     }
 
-    private void updateApplyButton() {
-        int selectedCount = mSelectedCollection.count();
-        if (selectedCount == 0) {
-            mButtonApply.setText(R.string.button_apply_default);
-            mButtonApply.setEnabled(false);
-        } else if (selectedCount == 1 && mSpec.singleSelectionModeEnabled()) {
+    protected void updateApplyButton() {
+        if (mSpec.singleSelectionModeEnabled() && mSpec.immediate) {
             mButtonApply.setText(R.string.button_apply_default);
             mButtonApply.setEnabled(true);
+            mTopToolbar.setVisibility(View.GONE);
         } else {
-            mButtonApply.setEnabled(true);
-            mButtonApply.setText(getString(R.string.button_apply, selectedCount));
-        }
+            int selectedCount = mSelectedCollection.count();
+            if (selectedCount == 0) {
+                mButtonApply.setText(R.string.button_apply_default);
+                mButtonApply.setEnabled(false);
+            } else if (selectedCount == 1 && mSpec.singleSelectionModeEnabled()) {
+                mButtonApply.setText(R.string.button_apply_default);
+                mButtonApply.setEnabled(true);
+            } else {
+                mButtonApply.setEnabled(true);
+                mButtonApply.setText(getString(R.string.button_apply, selectedCount));
+            }
 
-        if (mSpec.originalable) {
-            mOriginalLayout.setVisibility(View.VISIBLE);
-            updateOriginalState();
-        } else {
-            mOriginalLayout.setVisibility(View.GONE);
+            if (mSpec.originalable) {
+                mOriginalLayout.setVisibility(View.VISIBLE);
+                updateOriginalState();
+            } else {
+                mOriginalLayout.setVisibility(View.GONE);
+            }
         }
     }
 

@@ -7,7 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.vbes.util.media.MimeType;
-import com.vbes.util.media.SelectionCreator;
+import com.vbes.util.matisse.SelectionCreator;
 import com.vbes.util.ui.GalleryActivity;
 
 import java.lang.ref.WeakReference;

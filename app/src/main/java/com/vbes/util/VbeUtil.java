@@ -1083,16 +1083,6 @@ public class VbeUtil {
         return ProgressDialog.show(context, title, msg, true, false);
     }
 
-    /**
-     * 显示确认框
-     *
-     * @param context     Activity content
-     * @param message     内容
-     * @param posListener 点击事件监听器
-     */
-    public static void showConfirmCancelDialog(Context context, String message, DialogInterface.OnClickListener posListener) {
-        showConfirmCancelDialog(context, context.getString(android.R.string.dialog_alert_title), message, posListener);
-    }
 
     /**
      * 显示确认框
@@ -1102,44 +1092,8 @@ public class VbeUtil {
      * @param message     内容
      * @param posListener 点击事件监听器
      */
-    public static void showConfirmCancelDialog(Context context, String title, String message, DialogInterface.OnClickListener posListener) {
-        MyAlertDialog dialog = new MyAlertDialog(context);
-        dialog.setTitle(title);
-        dialog.setMessage(message);
-        dialog.setPositiveButton(android.R.string.ok, posListener);
-        dialog.setNegativeButton(android.R.string.cancel, null).create();
-        //dialog.create().setCanceledOnTouchOutside(false);
-        dialog.show();
-    }
-
-    /**
-     * 显示确认框
-     *
-     * @param context     Activity content
-     * @param title       标题
-     * @param message     内容
-     * @param posListener 点击事件监听器
-     */
-    public static void showConfirmCancelDialog(Context context, int title, int message, DialogInterface.OnClickListener posListener) {
-        MyAlertDialog dialog = new MyAlertDialog(context);
-        dialog.setTitle(title);
-        dialog.setMessage(message);
-        dialog.setPositiveButton(android.R.string.ok, posListener);
-        dialog.setNegativeButton(android.R.string.cancel, null).create();
-        //dialog.create().setCanceledOnTouchOutside(false);
-        dialog.show();
-    }
-
-    /**
-     * 显示确认框
-     *
-     * @param context     Activity content
-     * @param title       标题
-     * @param message     内容
-     * @param posListener 点击事件监听器
-     */
-    public static void showConfirmCancelDialog(Context context, String title, String message, final DialogResult posListener) {
-        new AlertDialog.Builder(context)
+    public static void showConfirmCancelDialog(Context context, int title, int message, final DialogResult posListener) {
+        new MyAlertDialog(context)
                 .setTitle(title)
                 .setMessage(message)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -1160,6 +1114,38 @@ public class VbeUtil {
                         if (posListener != null) posListener.onCancel();
                     }
                 }).create().show();
+    }
+
+    /**
+     * 显示确认框
+     *
+     * @param context     Activity content
+     * @param title       标题
+     * @param message     内容
+     * @param posListener 点击事件监听器
+     */
+    public static void showConfirmCancelDialog(Context context, String title, String message, final DialogResult posListener) {
+        MyAlertDialog dialog = new MyAlertDialog(context);
+        dialog.setTitle(title);
+        dialog.setMessage(message);
+        dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (posListener != null) posListener.onConfirm();
+            }
+        });
+        dialog.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (posListener != null) posListener.onCancel();
+            }
+        }).setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                if (posListener != null) posListener.onCancel();
+            }
+        }).create();
+        dialog.show();
     }
 
     /**
@@ -1250,8 +1236,8 @@ public class VbeUtil {
     /**
      * 高斯模糊图片
      *
-     * @param context
-     * @param bitmap
+     * @param context Activity上下文
+     * @param bitmap 要模糊的图片
      * @return
      */
     public static Bitmap blurBitmap(Context context, Bitmap bitmap) {
@@ -1309,9 +1295,8 @@ public class VbeUtil {
     /**
      * 深拷贝List数组
      *
-     * @param src
-     * @param <T>
-     * @return
+     * @param src 源数组
+     * @return 拷贝后的数组
      */
     public static <T extends Serializable> List<T> deepCopy(List<T> src) {
         List<T> res = new ArrayList<>();

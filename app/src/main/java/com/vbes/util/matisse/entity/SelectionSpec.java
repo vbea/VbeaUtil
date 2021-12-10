@@ -22,6 +22,7 @@ public final class SelectionSpec {
     public int themeId;
     public int orientation;
     public boolean countable;
+    public boolean immediate;
     public int maxSelectable;
     public int maxImageSelectable;
     public int maxVideoSelectable;
@@ -60,6 +61,7 @@ public final class SelectionSpec {
         themeId = R.style.DefaultTheme;
         orientation = 0;
         countable = false;
+        immediate = false;
         maxSelectable = 1;
         maxImageSelectable = 0;
         maxVideoSelectable = 0;

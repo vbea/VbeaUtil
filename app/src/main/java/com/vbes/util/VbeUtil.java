@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.math.BigDecimal;
 //import junit.framework.Assert;
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
@@ -55,6 +56,7 @@ import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
@@ -772,40 +774,74 @@ public class VbeUtil {
         return sb.toString().substring(1);
     }
 
+    /**
+     * Android 5-
+     */
     public static boolean notSupportMD() {
         return Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP;
     }
 
+    /**
+     * Android 5+
+     */
     public static boolean isSupportMD() {
         return Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT;
     }
 
+    /**
+     * Android 5
+     */
     public static boolean isAndroidL() {
         return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
     }
 
+    /**
+     * Android 6
+     */
     public static boolean isAndroidM() {
         return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M);
     }
 
+    /**
+     * Android 7
+     */
     public static boolean isAndroidN() {
         return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N);
     }
 
+    /**
+     * Android 8
+     */
     public static boolean isAndroidO() {
         return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O);
     }
 
+    /**
+     * Android 9
+     */
     public static boolean isAndroidP() {
         return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P);
     }
 
+    /**
+     * Android 10
+     */
     public static boolean isAndroidQ() {
         return (Build.VERSION.SDK_INT >= 29);
     }
 
+    /**
+     * Android 11
+     */
     public static boolean isAndroidR() {
         return (Build.VERSION.SDK_INT >= 30);
+    }
+
+    /**
+     * Android 12
+     */
+    public static boolean isAndroidS() {
+        return (Build.VERSION.SDK_INT >= 31);
     }
 
     public static boolean hasPermission(Context c, String p) {
@@ -832,6 +868,7 @@ public class VbeUtil {
         return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public static boolean checkSelfPermission(Context c, String... p) {
         if (isAndroidM()) {
             for (String i : p) {
@@ -854,6 +891,7 @@ public class VbeUtil {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
     public static void addClipboard(Context c, String label, String msg) {
         ClipboardManager cbm = (ClipboardManager) c.getSystemService(Context.CLIPBOARD_SERVICE);
         cbm.setPrimaryClip(ClipData.newPlainText(label, msg));
@@ -865,6 +903,7 @@ public class VbeUtil {
      * @param c   上下文
      * @param msg 文本内容
      */
+    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
     public static void addClipboard(Context c, String msg) {
         ClipboardManager cbm = (ClipboardManager) c.getSystemService(Context.CLIPBOARD_SERVICE);
         cbm.setPrimaryClip(ClipData.newPlainText("VbeUtil", msg));
@@ -1465,5 +1504,19 @@ public class VbeUtil {
      */
     public static void runDelayed(Runnable runnable, long delayed) {
         new Handler().postDelayed(runnable, delayed);
+    }
+
+    /**
+     * Android 11判断是都能够管理所有文件
+     * @param context 上下文
+     * @return 是否有权限
+     */
+    @RequiresApi(api = Build.VERSION_CODES.DONUT)
+    public static boolean canAccessAllFile(Context context) {
+        if (isAndroidR()) {
+            return Environment.isExternalStorageManager();
+        } else {
+            return hasAllPermissions(context, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
     }
 }

@@ -107,6 +107,12 @@ public final class SelectionCreator {
         return this;
     }
 
+    public SelectionCreator immediateSelect(boolean immediate) {
+        mSelectionSpec.countable = false;
+        mSelectionSpec.immediate = immediate;
+        return this;
+    }
+
     public SelectionCreator maxSelectable(int maxSelectable) {
         if (maxSelectable < 1)
             throw new IllegalArgumentException("maxSelectable must be greater than or equal to one");

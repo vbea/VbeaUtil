@@ -100,14 +100,17 @@ public class StickyDecoration extends RecyclerView.ItemDecoration {
         int right = parent.getWidth() - parent.getPaddingRight();
         //float lineHeight = textPaint.getTextSize() + fontMetrics.descent;
 
+        String preGroupId = "";
+        String groupId = "-1";
         for (int i = 0; i < childCount; i++) {
             View view = parent.getChildAt(i);
             int position = parent.getChildAdapterPosition(view);
+            preGroupId = groupId;
+            groupId = callback.getGroupId(position);
+            if (groupId.equals("") || groupId.equals(preGroupId)) continue;
 
-            if (!canShowGroup(position)) continue;
-
-            String textLine = callback.getGroupId(position);//.toUpperCase();
-            if (textLine.equals("")) continue;
+            //String textLine = callback.getGroupId(position);//.toUpperCase();
+            //if (textLine.equals("")) continue;
 
             int viewBottom = view.getBottom();
             float textY = Math.max(topGap, view.getTop());
@@ -115,14 +118,14 @@ public class StickyDecoration extends RecyclerView.ItemDecoration {
             if (position + 1 < itemCount) {
                 String nextGroupId = callback.getGroupId(position + 1);
                 //组内最后一个view进入了header
-                if (!nextGroupId.equals(textLine) && viewBottom < textY)
+                if (!nextGroupId.equals(groupId) && viewBottom < textY)
                     textY = viewBottom;
             }
             //textY - topGap决定了悬浮栏绘制的高度和位置
             c.drawRect(left, textY - topGap, right, textY, paint);
             //left+2*alignBottom 决定了文本往左偏移的多少（加-->向左移）
             //textY-alignBottom  决定了文本往右偏移的多少  (减-->向上移)
-            c.drawText(textLine, left + 2 * alignBottom, textY - alignBottom, textPaint);
+            c.drawText(groupId, left + 2 * alignBottom, textY - alignBottom, textPaint);
         }
     }
 

@@ -55,25 +55,36 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onPostCreate(savedInstanceState);
     }
 
-    public void enableToolBar() {
+    /**
+     * 启用Toolbar
+     * @param id Toolbar view id
+     */
+    public void enableToolBar(@IdRes int id) {
         if (toolbar == null) {
-            toolbar = getView(R.id.toolbar);
+            toolbar = getView(id);
             if (toolbar != null) {
                 setSupportActionBar(toolbar);
             }
         }
     }
 
+    /**
+     * 设置Toolbar标题
+     * @param t 标题
+     */
     public void setToolbarTitle(String t) {
-        enableToolBar();
         if (toolbar != null) {
             toolbar.setTitle(t);
         }
     }
 
-    public void enableBackButton() {
-        enableToolBar();
-        enableBackButton(new View.OnClickListener() {
+    /**
+     * 启用Toolbar返回键
+     * @param id Toolbar view id
+     */
+    public void enableBackButton(@IdRes int id) {
+        enableToolBar(id);
+        enableBackButton(id, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 supportFinishAfterTransition();
@@ -81,31 +92,38 @@ public abstract class BaseActivity extends AppCompatActivity {
         });
     }
 
-    public void enableBackButton(@DrawableRes int backRes) {
-        enableBackButton(backRes, new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                supportFinishAfterTransition();
-            }
-        });
-    }
-
-    public void enableBackButton(@DrawableRes int backRes, View.OnClickListener onClickListener) {
-        enableToolBar();
+    public void enableBackButton(@IdRes int id, View.OnClickListener onClickListener) {
+        enableToolBar(id);
         if (toolbar != null) {
-            toolbar.setNavigationIcon(backRes);
             toolbar.setNavigationOnClickListener(onClickListener);
-        } else {
-            Log.i(this.getClass().getName(), "enableBackButton(back) should be into the after() method.");
         }
     }
 
-    public void enableBackButton(View.OnClickListener onClickListener) {
-        enableToolBar();
+    /**
+     * 启用Toolbar返回键
+     * @param id Toolbar view id
+     * @param backRes 返回键图标资源id
+     */
+    public void enableBackButton(@IdRes int id, @DrawableRes int backRes) {
+        enableBackButton(id, backRes, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                supportFinishAfterTransition();
+            }
+        });
+    }
+
+    /**
+     * 启用Toolbar返回键
+     * @param id Toolbar view id
+     * @param backRes 返回键图标资源id
+     * @param onClickListener 返回键点击监听器
+     */
+    public void enableBackButton(@IdRes int id, @DrawableRes int backRes, View.OnClickListener onClickListener) {
+        enableToolBar(id);
         if (toolbar != null) {
+            toolbar.setNavigationIcon(backRes);
             toolbar.setNavigationOnClickListener(onClickListener);
-        } else {
-            Log.i(this.getClass().getName(), "enableBackButton(back) should be into the after() method.");
         }
     }
 
@@ -156,7 +174,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         });
     }
 
-    public void showDialog(@NonNull String title, @NonNull String message, final DialogResult result) {
+    public void showDialog(@NonNull String title, @NonNull String message, DialogResult result) {
         VbeUtil.showConfirmCancelDialog(this, title, message, result);
     }
 

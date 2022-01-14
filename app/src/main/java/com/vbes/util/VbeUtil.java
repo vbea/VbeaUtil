@@ -773,23 +773,6 @@ public class VbeUtil {
         return true;
     }
 
-    public static String getFileType(String filename) {
-        if (filename.indexOf(".") >= 0)
-            return filename.substring(filename.lastIndexOf("."));
-        return filename;
-    }
-
-    public static String getFileTypeName(String filename) {
-        if (filename.indexOf(".") >= 0)
-            return filename.substring(filename.lastIndexOf(".") + 1);
-        return filename;
-    }
-
-    public static boolean isImageFile(String path) {
-        String p = path.toLowerCase();
-        return p.endsWith(".jpg") || p.endsWith(".png") || p.endsWith(".gif") || p.endsWith(".bmp");
-    }
-
     public static String removeEmptyItem(String[] list) {
         if (list.length == 1)
             return list[0];
@@ -873,14 +856,12 @@ public class VbeUtil {
         return (Build.VERSION.SDK_INT >= 31);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     public static boolean hasPermission(Context c, String p) {
         if (isAndroidM())
             return c.checkSelfPermission(p) == PackageManager.PERMISSION_GRANTED;
         else return true;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     public static boolean hasAllPermissions(Context c, String... p) {
         if (isAndroidM()) {
             for (String s : p) {
@@ -899,7 +880,6 @@ public class VbeUtil {
         return true;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     public static boolean checkSelfPermission(Context c, String... p) {
         if (isAndroidM()) {
             for (String i : p) {
@@ -940,25 +920,7 @@ public class VbeUtil {
         cbm.setPrimaryClip(ClipData.newPlainText("VbeUtil", msg));
     }
 
-    /**
-     * 读取文本文件并返回
-     *
-     * @param is InputStream
-     * @return 文件内容
-     */
-    public static String ReadFileToString(InputStream is) {
-        try {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            int i = -1;
-            while ((i = is.read()) != -1) {
-                baos.write(i);
-            }
-            baos.close();
-            return baos.toString();
-        } catch (Exception e) {
-            return null;
-        }
-    }
+
 
     /**
      * 获取设备序列号
@@ -994,48 +956,6 @@ public class VbeUtil {
             return deviceId.toString();
         }
         return deviceId.toString();
-    }
-
-    /**
-     * 获取文件扩展名
-     *
-     * @param name 文件名
-     * @return 文件扩展名
-     */
-    public static String getExtension(String name) {
-        String suffix = "";
-        int idx = name.lastIndexOf(".");
-        if (idx > 0)
-            suffix = name.substring(idx);
-        return suffix.toLowerCase();
-    }
-
-    /**
-     * 获取文件扩展名(去掉.)
-     *
-     * @param name 文件名
-     * @return 文件扩展名
-     */
-    public static String getExtensionName(String name) {
-        String suffix = "";
-        int idx = name.lastIndexOf(".");
-        if (idx > 0)
-            suffix = name.substring(idx + 1);
-        return suffix.toLowerCase();
-    }
-
-    /**
-     * 得到扩展名MIME类型
-     *
-     * @param fileName 文件名
-     * @return 文件MIME类型
-     */
-    public static String getMimeType(String fileName) {
-        String mime = "*/*";
-        String tmp = MimeTypeMap.getSingleton().getMimeTypeFromExtension(getExtensionName(fileName));
-        if (tmp != null)
-            mime = tmp;
-        return mime;
     }
 
     /**
@@ -1490,22 +1410,18 @@ public class VbeUtil {
         startActivityOptions(context, intent, view, shareName, false);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public static void startActivityOptions(Activity context, Intent intent, View view, String shareName) {
         startActivityOptions(context, intent, view, shareName, true);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.ECLAIR)
     public static void startActivityOptions(Activity context, Class<?> cls) {
         startActivityOptions(context, new Intent(context, cls));
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.ECLAIR)
     public static void startActivityForResult(Activity context, Class<?> cls, int requestCode) {
         startActivityForResult(requestCode, context, new Intent(context, cls));
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.ECLAIR)
     public static void startActivityOptions(Activity context, Intent intent, Pair... pairs) {
         try {
             if (isSupportMD()) {
@@ -1520,7 +1436,6 @@ public class VbeUtil {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.ECLAIR)
     public static void startActivityForResult(int requestCode, Activity context, Intent intent, Pair<View, String>... pairs) {
         try {
             if (isSupportMD()) {
@@ -1535,7 +1450,6 @@ public class VbeUtil {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private static void startActivityOptions(Activity context, Intent intent, View view, String shareName, boolean setName) {
         try {
             if (isSupportMD()) {
@@ -1567,7 +1481,7 @@ public class VbeUtil {
             intent.setAction(Intent.ACTION_VIEW);
             intent.addCategory(Intent.CATEGORY_DEFAULT);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            String mime = getMimeType(file.getName());
+            String mime = FileUtil.getMimeType(file.getName());
             if (VbeUtil.isAndroidN()) {
                 Uri contentUri = FileProvider.getUriForFile(context, provider, file);
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);

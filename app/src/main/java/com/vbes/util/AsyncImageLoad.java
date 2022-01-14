@@ -4,9 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.widget.ImageView;
 
 import java.io.File;
+
+import androidx.annotation.RequiresApi;
 
 /**
  * 异步加载图片并设置到ImageView
@@ -14,6 +17,7 @@ import java.io.File;
  * <p>
  * @author Created by Vbe on 2018/10/11.
  */
+@RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
 public class AsyncImageLoad extends AsyncTask<String, Intent, Bitmap> {
     private ImageView mView;
     private Context context;
@@ -66,7 +70,7 @@ public class AsyncImageLoad extends AsyncTask<String, Intent, Bitmap> {
                     mView.setImageBitmap(bitmap);
             }
             if (!isExist && isSave) {
-                String ext = VbeUtil.getExtensionName(path);
+                String ext = FileUtil.getExtensionName(path);
                 if (ext.equals("jpg"))
                     VbeUtil.saveBitmapToJPG(bitmap, new File(savePath, path));
                 else

@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.SparseArray;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.vbes.util.VbeUtil;
 
+import androidx.annotation.AnyRes;
+import androidx.annotation.AttrRes;
 import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
@@ -26,6 +29,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
@@ -244,6 +248,18 @@ public abstract class BaseFragment extends Fragment {
             return getContext().getColor(id);
         }
         return getContext().getResources().getColor(id);
+    }
+
+    @AnyRes
+    public int getThemeAttr(@AttrRes int id) {
+        TypedValue typedValue = new TypedValue();
+        getActivity().getTheme().resolveAttribute(id, typedValue, true);
+        return typedValue.resourceId;
+    }
+
+    @ColorInt
+    public int getThemeColor(@AttrRes int id) {
+        return ResourcesCompat.getColor(getResources(), getThemeAttr(id), getActivity().getTheme());
     }
 
     public void onResume() {

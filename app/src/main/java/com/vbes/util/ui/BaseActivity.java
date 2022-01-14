@@ -8,6 +8,9 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+
+import androidx.annotation.AnyRes;
+import androidx.annotation.AttrRes;
 import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
@@ -17,7 +20,10 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.res.ResourcesCompat;
+
 import android.util.SparseArray;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Checkable;
 import android.widget.ImageView;
@@ -344,6 +350,18 @@ public abstract class BaseActivity extends AppCompatActivity {
         } else {
             return getResources().getColor(id);
         }
+    }
+
+    @AnyRes
+    public int getThemeAttr(@AttrRes int id) {
+        TypedValue typedValue = new TypedValue();
+        getTheme().resolveAttribute(id, typedValue, true);
+        return typedValue.resourceId;
+    }
+
+    @ColorInt
+    public int getThemeColor(@AttrRes int id) {
+        return ResourcesCompat.getColor(getResources(), getThemeAttr(id), getTheme());
     }
 
     @Override

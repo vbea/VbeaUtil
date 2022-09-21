@@ -73,9 +73,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @param t 标题
      */
     public void setToolbarTitle(String t) {
-        if (toolbar != null) {
-            toolbar.setTitle(t);
-        }
+        getSupportActionBar().setTitle(t);
     }
 
     /**
